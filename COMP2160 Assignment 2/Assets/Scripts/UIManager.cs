@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,14 +14,23 @@ public class UIManager : MonoBehaviour
         {
             if (instance == null) 
             {
-                Debug.LogError("There is not UIManager in the scene.");
+                Debug.LogError("There is no UIManager in the scene.");
             }            
             return instance;
         }
     }
+    //Timer UI fields
     public Text timerText;
     private float timer;
+
+    //HealthBar UI fields
     public Slider slider;
+
+    //GameOver UI fields
+    public Text gameOverText;
+    private string winText = "YOU WIN!";
+    private string loseText = "YOU LOSE!";
+    public GameObject gameOverPanel;
 
     void Awake() 
     {
@@ -36,6 +45,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+     void Start()
+    {
+        gameOverPanel.SetActive(false);
+    }
+
     void Update()
     {
         timer = Time.realtimeSinceStartup;
@@ -47,9 +61,29 @@ public class UIManager : MonoBehaviour
         slider.maxValue = health;
         slider.value = health;
     }
-    
+
     public void SetHealth(int health)
     {
         slider.value = health;
+    }
+
+    public void ShowGameOver(bool win)
+    {
+        if (win)
+        {
+            gameOverText.text = winText;
+        }
+        else 
+        {
+            gameOverText.text = loseText;
+        }
+        gameOverPanel.SetActive(true);
+    }
+
+    public void Restart()
+    {
+        // reload the scene
+        SceneManager.LoadScene(0);
+        gameOverPanel.SetActive(false);
     }
 }
