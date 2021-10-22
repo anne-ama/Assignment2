@@ -27,10 +27,11 @@ public class UIManager : MonoBehaviour
     public Slider slider;
 
     //GameOver UI fields
+    public GameObject gameOverPanel;
     public Text gameOverText;
     private string winText = "YOU WIN!";
     private string loseText = "YOU LOSE!";
-    public GameObject gameOverPanel;
+    
 
     void Awake() 
     {
