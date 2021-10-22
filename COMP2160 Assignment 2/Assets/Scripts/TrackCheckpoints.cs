@@ -4,19 +4,36 @@ using UnityEngine;
 
 public class TrackCheckpoints : MonoBehaviour
 {
-    private void Awake() {
-        Transform checkpointsTransform = transform.Find("CheckpointList");
+    // private List<Checkpoint> checkpointsList;
+    // private int nextCheckpointSingleIndex;
+    // private void Awake() {
+    //     Transform checkpointsTransform = transform.Find("CheckpointList");
 
-        foreach (Transform checkpointSingleTransform in checkpointsTransform)
-        {
-            Debug.Log(checkpointSingleTransform);
-            Checkpoint checkpointSingle = checkpointSingleTransform.GetComponent<Checkpoint>();
-            checkpointSingle.SetTrackCheckpoints(this);
-        }
-    }
+    //     foreach (Transform checkpointSingleTransform in checkpointsTransform)
+    //     {
+    //         Debug.Log(checkpointSingleTransform);
+    //         Checkpoint checkpointSingle = checkpointSingleTransform.GetComponent<Checkpoint>();
+    //         checkpointSingle.SetTrackCheckpoints(this);
+    //         checkpointsList.Add(checkpointSingle);
+    //     }
 
-    public void PlayerThroughCheckpoint(Checkpoint checkpoint)
-    {
-        Debug.Log(checkpoint.transform.name);
-    }
+    //     nextCheckpointSingleIndex = 0;
+    // }
+
+    // public void PlayerThroughCheckpoint(Checkpoint checkpoint)
+    // {
+    //     // Debug.Log(checkpoint.transform.name);
+    //     if (checkpointsList.IndexOf(checkpoint) == nextCheckpointSingleIndex)
+    //     {
+    //         Debug.Log("Correct checkpoint");
+    //         //correct checkpoint
+    //         //modulo supports multiple laps
+    //         nextCheckpointSingleIndex = (nextCheckpointSingleIndex + 1) % checkpointsList.Count;
+    //     }
+    //     else
+    //     {
+    //         //wrong checkpoint
+    //         Debug.Log("Wrong checkpoint");
+    //     }
+    // }
 }
