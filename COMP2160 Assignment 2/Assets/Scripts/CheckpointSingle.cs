@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CheckpointSingle : MonoBehaviour
 { 
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter(Collider other) 
+    {
         GameObject collider = other.gameObject;
         if (Layers.Instance.checkpoint.Contains(collider))
         {
@@ -13,7 +14,8 @@ public class CheckpointSingle : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other) {
+    private void OnTriggerExit(Collider other) 
+    {
         Debug.Log("Leaving");
     }
 }
