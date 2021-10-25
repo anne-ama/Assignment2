@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckpointSingle : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+{ 
+    private void OnTriggerEnter(Collider other) {
+        GameObject collider = other.gameObject;
+        if (Layers.Instance.checkpoint.Contains(collider))
+        {
+            GetComponent<Renderer>().material.color = new Color(1.0f, 0.8f, 0.4f, 1.0f);
+            Debug.Log("Something is detected");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void OnTriggerExit(Collider other) {
+        Debug.Log("Leaving");
     }
 }

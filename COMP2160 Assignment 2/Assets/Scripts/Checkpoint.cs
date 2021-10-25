@@ -16,5 +16,5 @@ public class Checkpoint : MonoBehaviour
     // {
     //     this.trackCheckpoints = trackCheckpoints;
     // }
-
+    
 }

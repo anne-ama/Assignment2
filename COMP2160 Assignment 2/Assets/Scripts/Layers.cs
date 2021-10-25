@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class Layers : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    static private Layers instance;
+    static public Layers Instance 
     {
-        
+        get 
+        {
+            if (instance == null)
+            {
+                Debug.LogError("There is no Layers instance in the scene.");
+            }
+            return instance;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public LayerMask player;
+    public LayerMask checkpoint;
+    
+    void Awake()
+    {   
+        if (instance != null) 
+        {
+            // destroy duplicates
+            Destroy(gameObject);            
+        }
+        else 
+        {
+            instance = this;
+        }
     }
 }
