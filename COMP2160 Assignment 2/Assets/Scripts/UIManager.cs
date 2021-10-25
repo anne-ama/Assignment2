@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour
     private string winText = "YOU WIN!";
     private string loseText = "YOU LOSE!";
     
+    
 
     void Awake() 
     {
