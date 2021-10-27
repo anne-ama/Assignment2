@@ -17,6 +17,7 @@ public class CheckpointSingle : MonoBehaviour
         GameObject collider = other.gameObject;
         if (Layers.Instance.checkpoint.Contains(collider))
         {
+            //probably call is active from the other script??
             isActive();
             checkpointList.PlayerThroughCheckpoint(this);
 
@@ -28,12 +29,12 @@ public class CheckpointSingle : MonoBehaviour
         notActive();
     }
 
-    private void isActive()
+    public void isActive()
     {
         GetComponent<Renderer>().material.color = activeColor;
     }
 
-    private void notActive()
+    public void notActive()
     {
         GetComponent<Renderer>().material.color = inactiveColor;
     }
