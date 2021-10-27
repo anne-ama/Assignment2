@@ -5,6 +5,7 @@ using UnityEngine;
 public class CheckpointList : MonoBehaviour
 {
     private List<CheckpointSingle> checkpointSingleList;
+    private List<float> checkpointTimeList;
     public Transform checkpointList;
     private int nextCheckpointSingleIndex;
     private CheckpointSingle checkpointSingle;
@@ -13,6 +14,7 @@ public class CheckpointList : MonoBehaviour
         //Adding checkpoints to the list to track 
         Transform checkpointsTransform = checkpointList;
         checkpointSingleList = new List<CheckpointSingle>();
+        checkpointTimeList = new List<float>();
         foreach (Transform checkpointSingleTransform in checkpointsTransform)
         {
             Debug.Log(checkpointSingleTransform);
@@ -32,6 +34,8 @@ public class CheckpointList : MonoBehaviour
             //this loops back to 0 however this may be unnecessary
             nextCheckpointSingleIndex = (nextCheckpointSingleIndex + 1) % checkpointSingleList.Count;
             checkpointSingle.isActive();
+            checkpointTimeList.Add(Time.realtimeSinceStartup);
+            Debug.Log(Time.realtimeSinceStartup);
         }
         else
         {
