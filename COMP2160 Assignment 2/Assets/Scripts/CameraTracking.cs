@@ -18,7 +18,7 @@ public class CameraTracking : MonoBehaviour
     // Update is called once per frame
  void Update() 
  { 
-	//transform.position = target.transform.position + target.ReadOnlyDir(); 
+	transform.position = target.transform.position + target.ReadOnlyDir(); 
 	transform.Translate(new Vector3(0,yLock-transform.position.y, 0));
  } 
 }

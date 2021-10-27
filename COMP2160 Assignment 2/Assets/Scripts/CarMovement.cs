@@ -18,12 +18,16 @@ public class CarMovement : MonoBehaviour
     //private State state;
 	private float dx;
 	private float dy;
+	public GameObject wheelAll;
+	public GameObject wheelSin;
+	public GameObject wheelCos;
+	public GameObject wheelTan;
+	private Vector3 forwardDirection;
 	
-	public BoxCollider groundCollider;
+	//private BoxCollider groundCollider;
 
 	private float relativeForwards;
 	private float relativeBackwards;
-	public 
 	
 
 	// Start is called before the first frame update
@@ -38,6 +42,7 @@ public class CarMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		forwardDirection = 5*(wheelAll.transform.position - wheelCos.transform.position);
 		if(onGround)
 		{
 			dx = Input.GetAxis("Horizontal");
@@ -45,8 +50,8 @@ public class CarMovement : MonoBehaviour
 			if(dy!=0)
 			{
 				transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
-				//rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
-				//b.AddRelativeForce(drag*Vector3.back*dy);
+				rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
+				rb.AddRelativeForce(drag*Vector3.back*dy);
 			}
 		}
 		else
@@ -54,7 +59,7 @@ public class CarMovement : MonoBehaviour
 			dx = 0;
 			dy = 0;
 		}
-		
+		Debug.DrawRay(this.transform.position, forwardDirection, Color.green);
 		
     }
    /*void FixedUpdate()
@@ -114,5 +119,9 @@ public class CarMovement : MonoBehaviour
         InAir,
 		UpSideDown
     }*/
+	public Vector3 ReadOnlyDir()
+	{
+		return forwardDirection;
+	}
 
 }
