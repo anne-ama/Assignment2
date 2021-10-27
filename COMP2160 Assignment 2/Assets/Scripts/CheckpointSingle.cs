@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CheckpointSingle : MonoBehaviour
 { 
+    private Color activeColor = new Color(1.0f, 0.8f, 0.4f, 1.0f);
+    private Color inactiveColor = new Color(0.5f, 0.5f, 0.4f, 1.0f);
     private void Start() {
         notActive();
     }
@@ -24,14 +26,13 @@ public class CheckpointSingle : MonoBehaviour
 
     private void isActive()
     {
-        GetComponent<Renderer>().material.color = new Color(1.0f, 0.8f, 0.4f, 1.0f);
+        GetComponent<Renderer>().material.color = activeColor;
         Debug.Log("Something is detected");
     }
 
     private void notActive()
     {
-        GetComponent<Renderer>().material.color = new Color(0.5f, 0.5f, 0.4f, 1.0f);
-        // Debug.Log("Leaving");
+        GetComponent<Renderer>().material.color = inactiveColor;
     }
 
 }
