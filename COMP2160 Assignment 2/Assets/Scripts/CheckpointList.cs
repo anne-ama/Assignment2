@@ -32,10 +32,16 @@ public class CheckpointList : MonoBehaviour
             //Correct checkpoint passed through
             Debug.Log("Correct Checkpoint");
             //this loops back to 0 however this may be unnecessary
-            nextCheckpointSingleIndex = (nextCheckpointSingleIndex + 1) % checkpointSingleList.Count;
+            // nextCheckpointSingleIndex = (nextCheckpointSingleIndex + 1) % checkpointSingleList.Count;
+            nextCheckpointSingleIndex++;
             checkpointSingle.isActive();
             checkpointTimeList.Add(Time.realtimeSinceStartup);
             Debug.Log(Time.realtimeSinceStartup);
+
+            if (nextCheckpointSingleIndex >= checkpointSingleList.Count)
+            {
+                Debug.Log("last checkpoint");
+            }
         }
         else
         {

@@ -5,8 +5,8 @@ using UnityEngine;
 public class CheckpointSingle : MonoBehaviour
 { 
     private CheckpointList checkpointList;
-    private Color activeColor = new Color(1.0f, 0.8f, 0.4f, 1.0f);
-    private Color inactiveColor = new Color(0.5f, 0.5f, 0.4f, 1.0f);
+    public Color activeColor = new Color(1.0f, 0.8f, 0.4f, 1.0f);
+    public Color inactiveColor = new Color(0.5f, 0.5f, 0.4f, 1.0f);
 
     private void Start() {
         notActive();
