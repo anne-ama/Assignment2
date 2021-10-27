@@ -18,9 +18,13 @@ public class CarMovement : MonoBehaviour
     //private State state;
 	private float dx;
 	private float dy;
+	
 	public BoxCollider groundCollider;
 
-
+	private float relativeForwards;
+	private float relativeBackwards;
+	public 
+	
 
 	// Start is called before the first frame update
     void Start()
@@ -28,6 +32,7 @@ public class CarMovement : MonoBehaviour
 		//state = State.OnGround;
 		rb = gameObject.GetComponent<Rigidbody>();
 		rb.useGravity = true;
+		Debug.Log(Physics.gravity);
     }
 
     // Update is called once per frame
@@ -40,8 +45,8 @@ public class CarMovement : MonoBehaviour
 			if(dy!=0)
 			{
 				transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
-				rb.AddForce(accelerationSpeed*Vector3.forward*dy);
-				rb.AddForce(drag*Vector3.back*dy);
+				//rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
+				//b.AddRelativeForce(drag*Vector3.back*dy);
 			}
 		}
 		else
