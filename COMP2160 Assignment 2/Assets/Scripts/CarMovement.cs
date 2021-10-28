@@ -9,14 +9,11 @@ public class CarMovement : MonoBehaviour
     public float accelerationSpeed = 10;
     public float reverseSpeed = 5;
     public float turningSpeed = 30;
-    public float friction;
-    public float gravity;
     public float drag = 2;
 	private bool onGround = true;
 	private Rigidbody rb;
-	private Vector3 velocity = Vector3.forward;
-	private float dx;
-	private float dy;
+	
+	//I am coding the wheels into the game so i can get which direction is forward. And i have named the wheels into the game based on where they would be on a unit circle
 	public GameObject wheelAll;
 	public GameObject wheelSin;
 	public GameObject wheelCos;
@@ -35,6 +32,9 @@ public class CarMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		float dx;
+		float dy;
+		float lastDY;
 		forwardDirection = 5*(wheelAll.transform.position - wheelCos.transform.position);
 		if(onGround)
 		{
@@ -45,8 +45,15 @@ public class CarMovement : MonoBehaviour
 				transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
 				rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
 				rb.AddRelativeForce(drag*Vector3.back*dy);
-				rb.AddForce(forwardDirection - rb.velocity);
+				lastDY = dy;
+				Vector3 Cancellation = rb.velocity-forwardDirection;
+				Debug.Log("Forwards: " + forwardDirection + "; Velocity: "+rb.velocity+"; Subtraction: " + (forwardDirection - rb.velocity) +";");
+				rb.AddForce(forwardDirection*lastDY - rb.velocity);
+
+				Debug.Log(Vector3.Angle(forwardDirection, rb.velocity));
+				//Debug.Log(Quaternion.Euler(forwardDirection.x, forwardDirection.y, forwardDirection.z));
 			}
+			
 		}
 		else
 		{
