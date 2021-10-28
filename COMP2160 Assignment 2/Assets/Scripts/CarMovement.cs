@@ -48,9 +48,11 @@ public class CarMovement : MonoBehaviour
 				lastDY = dy;
 				Vector3 Cancellation = rb.velocity-forwardDirection;
 				Debug.Log("Forwards: " + forwardDirection + "; Velocity: "+rb.velocity+"; Subtraction: " + (forwardDirection - rb.velocity) +";");
+				float velocityAngle = Vector3.Angle(forwardDirection, rb.velocity);
+				//if 
 				rb.AddForce(forwardDirection*lastDY - rb.velocity);
 
-				Debug.Log(Vector3.Angle(forwardDirection, rb.velocity));
+				//Debug.Log(Vector3.Angle(forwardDirection, rb.velocity));
 				//Debug.Log(Quaternion.Euler(forwardDirection.x, forwardDirection.y, forwardDirection.z));
 			}
 			
