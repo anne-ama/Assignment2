@@ -15,7 +15,6 @@ public class CarMovement : MonoBehaviour
 	private bool onGround = true;
 	private Rigidbody rb;
 	private Vector3 velocity = Vector3.forward;
-    //private State state;
 	private float dx;
 	private float dy;
 	public GameObject wheelAll;
@@ -24,16 +23,10 @@ public class CarMovement : MonoBehaviour
 	public GameObject wheelTan;
 	private Vector3 forwardDirection;
 	
-	//private BoxCollider groundCollider;
-
-	private float relativeForwards;
-	private float relativeBackwards;
-	
 
 	// Start is called before the first frame update
     void Start()
     {
-		//state = State.OnGround;
 		rb = gameObject.GetComponent<Rigidbody>();
 		rb.useGravity = true;
 		Debug.Log(Physics.gravity);
@@ -52,6 +45,7 @@ public class CarMovement : MonoBehaviour
 				transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
 				rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
 				rb.AddRelativeForce(drag*Vector3.back*dy);
+				rb.AddForce(forwardDirection - rb.velocity);
 			}
 		}
 		else
@@ -62,14 +56,6 @@ public class CarMovement : MonoBehaviour
 		Debug.DrawRay(this.transform.position, forwardDirection, Color.green);
 		
     }
-   /*void FixedUpdate()
-    {
-		if(Input.GetAxis("Vertical")!=0)
-		{
-		}
-		rb.velocity = rb.velocity + velocity*Time.fixedDeltaTime;
-		rb.AddForce(velocity);
-    }*/
 	void OnTriggerEnter(Collider other)
 	{
 		onGround = true;
@@ -79,6 +65,16 @@ public class CarMovement : MonoBehaviour
 		onGround = false;
 	}
 	
+
+	public Vector3 ReadOnlyDir()
+	{
+		return forwardDirection;
+	}
+//OldCode
+    //private State state;
+		//state = State.OnGround;
+	//private BoxCollider groundCollider;
+
 		/*switch (state)
         {
             case State.OnGround:
@@ -119,9 +115,15 @@ public class CarMovement : MonoBehaviour
         InAir,
 		UpSideDown
     }*/
-	public Vector3 ReadOnlyDir()
-	{
-		return forwardDirection;
-	}
+	   /*void FixedUpdate()
+    {
+		if(Input.GetAxis("Vertical")!=0)
+		{
+		}
+		rb.velocity = rb.velocity + velocity*Time.fixedDeltaTime;
+		rb.AddForce(velocity);
+    }*/
 
+	
+	
 }
