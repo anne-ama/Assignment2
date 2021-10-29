@@ -22,6 +22,7 @@ public class CarMovement : MonoBehaviour
 	public GameObject wheelTan;
 	private Vector3 forwardDirection;
 	
+	private BoxCollider bc;
 	private float speed = 0;
 	
 
@@ -29,6 +30,7 @@ public class CarMovement : MonoBehaviour
     void Start()
     {
 		rb = gameObject.GetComponent<Rigidbody>();
+		bc = gameObject.GetComponent<BoxCollider>();
 		rb.useGravity = true;
 		Debug.Log(Physics.gravity);
     }
@@ -39,6 +41,17 @@ public class CarMovement : MonoBehaviour
 		float dx;
 		float dy;
 		forwardDirection = accelerationSpeed*(wheelAll.transform.position - wheelCos.transform.position);
+		if(Input.GetKeyDown(KeyCode.Space))//test function that will be removed later
+		{
+			if(onGround)
+			{
+				onGround = false;
+			}
+			else
+			{
+				onGround = true;
+			}
+		}
 		if(onGround)
 		{
 			dx = Input.GetAxis("Horizontal");
@@ -83,11 +96,24 @@ public class CarMovement : MonoBehaviour
     }
 	void OnTriggerEnter(Collider other)
 	{
-		onGround = true;
+		if(other.name=="Terrain")
+		{
+			onGround = true;
+			Debug.Log("True");
+		}
+	}
+	void OnTriggerStay(Collider other)
+	{
+		Debug.Log(other);
 	}
 	void OnTriggerExit(Collider other)
 	{
-		onGround = false;
+		//LayerMask.LayerToName(
+		if(other.name=="Terrain")
+		{
+			onGround = false;
+			Debug.Log("False");
+		}
 	}
 	
 
@@ -95,6 +121,7 @@ public class CarMovement : MonoBehaviour
 	{
 		return forwardDirection;
 	}
+	//public Vector3[][] 
 //OldCode
     //private State state;
 		//state = State.OnGround;
