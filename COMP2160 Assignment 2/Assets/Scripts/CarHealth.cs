@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CarHealth : MonoBehaviour
 {
-    // Start is called before the first frame update
+    
+	// Start is called before the first frame update
     void Start()
     {
         
@@ -15,4 +16,16 @@ public class CarHealth : MonoBehaviour
     {
         
     }
+	void OnCollisionEnter(Collision collision)
+    {
+            Debug.Log(collision.impulse.magnitude);
+			if(collision.impulse.magnitude<100)
+			{
+			}
+			else
+			{
+			}
+			
+    }
+
 }
