@@ -11,13 +11,10 @@ public class CheckpointList : MonoBehaviour
     private CheckpointSingle checkpointSingle;
 
     private void Awake() {
-        //Adding checkpoints to the list to track 
         Transform checkpointsTransform = checkpointList;
         checkpointSingleList = new List<CheckpointSingle>();
-        //Create a new time list to record times 
         checkpointTimeList = new List<float>();
 
-        //Cycle through and add 
         foreach (Transform checkpointSingleTransform in checkpointsTransform)
         {
             Debug.Log(checkpointSingleTransform);
@@ -35,10 +32,8 @@ public class CheckpointList : MonoBehaviour
 
     public void PlayerThroughCheckpoint(CheckpointSingle checkpointSingle)
     {
-        //if the index of the one we are passing through is the correct index
         if (checkpointSingleList.IndexOf(checkpointSingle) == currentIndex)
         {
-            //Correct checkpoint passed through
             Debug.Log("Correct Checkpoint");
 
              //Log the time that it passes through the checkpoint
@@ -48,8 +43,7 @@ public class CheckpointList : MonoBehaviour
             //If this is the last checkpoint then indicate that it is the end of the game
             if (currentIndex == checkpointSingleList.Count - 1)
             {
-                // currentIndex = checkpointSingleList.Count;
-                Debug.Log("Game Won!");
+                GameManager.Instance.Win();
             }
             else {
                 currentIndex++;
@@ -57,13 +51,10 @@ public class CheckpointList : MonoBehaviour
             }
 
         }
-
         else
         {
             checkpointSingle.notActive();
             Debug.Log("Wrong Checkpoint");
         }
     }
-
-
 }
