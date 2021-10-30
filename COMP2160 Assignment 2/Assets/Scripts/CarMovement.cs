@@ -14,32 +14,26 @@ public class CarMovement : MonoBehaviour
 	private bool onGround = true;
 	private Rigidbody rb;
 	private float lastDY;
-	
+	private	float dx;
+	private float dy;
 	//I am coding the wheels into the game so i can get which direction is forward. And i have named the wheels into the game based on where they would be on a unit circle
 	public GameObject wheelAll;
 	public GameObject wheelSin;
 	public GameObject wheelCos;
 	public GameObject wheelTan;
 	private Vector3 forwardDirection;
-	
 	private BoxCollider bc;
-	private float speed = 0;
-	
-
 	// Start is called before the first frame update
     void Start()
     {
 		rb = gameObject.GetComponent<Rigidbody>();
 		bc = gameObject.GetComponent<BoxCollider>();
 		rb.useGravity = true;
-		Debug.Log(Physics.gravity);
+		onGround = true;
     }
-
     // Update is called once per frame
     void Update()
     {
-		float dx;
-		float dy;
 		forwardDirection = accelerationSpeed*(wheelAll.transform.position - wheelCos.transform.position);
 		if(Input.GetKeyDown(KeyCode.Space))//test function that will be removed later
 		{
@@ -57,6 +51,7 @@ public class CarMovement : MonoBehaviour
 			dx = Input.GetAxis("Horizontal");
 			dy = Input.GetAxis("Vertical");
 			transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
+			
 			if(dy!=0)
 			{
 				rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
@@ -73,16 +68,13 @@ public class CarMovement : MonoBehaviour
 				}
 				if(mag>-5&&mag<5)
 				{
-					Debug.Log("Checkpoint");
-					lastDY = dy;
-					
+					//Debug.Log("Checkpoint");
+					lastDY = dy;	
 				}
-
 				Debug.Log(mag+"(, )"+lastDY+"(, )"+dy);
 				rb.AddForce(- rb.velocity);
 				rb.AddRelativeForce(Vector3.forward*mag*lastDY);
 				rb.AddRelativeForce(drag*Vector3.back*dy);
-
 			}
 			
 		}
@@ -94,33 +86,50 @@ public class CarMovement : MonoBehaviour
 		Debug.DrawRay(this.transform.position, forwardDirection, Color.green);
 		
     }
-	void OnTriggerEnter(Collider other)
+	void OnTriggerEnter(Collider other)// This needs to be edited to account for layers
 	{
-		if(other.name=="Terrain")
-		{
-			onGround = true;
-			Debug.Log("True");
-		}
+		//GameObject collider = other.gameObject;
+		//if(Layers.pl.Terr
+		//if(other.name=="Terrain")
+		//{
+		//	isGrounded();
+		//	Debug.Log("True");
+		//}
 	}
-	void OnTriggerStay(Collider other)
+	void OnTriggerExit(Collider other)// This needs to be edited to account for layers
 	{
-		Debug.Log(other);
-	}
-	void OnTriggerExit(Collider other)
-	{
+		notGrounded();
 		//LayerMask.LayerToName(
 		if(other.name=="Terrain")
 		{
-			onGround = false;
 			Debug.Log("False");
 		}
 	}
-	
+	public void isGrounded()
+	{
+		onGround = true;
+	}
+	public void notGrounded()
+	{
+		onGround = false;
+	}
 
 	public Vector3 ReadOnlyDir()
 	{
-		return forwardDirection;
+		return forwardDirection;//.normalized
 	}
+	public float readOnlyX()
+	{
+		return dx;
+	}
+	public float readOnlyY()
+	{
+		return dy;
+	}
+
+	
+	
+	
 	//public Vector3[][] 
 //OldCode
     //private State state;
@@ -195,6 +204,20 @@ public class CarMovement : MonoBehaviour
 
 					//Debug.Log("Forwards: " + forwardDirection + "; Velocity: "+rb.velocity+"; Subtraction: " + (forwardDirection - rb.velocity) +";");
 				//float velocityAngle = Vector3.Angle(forwardDirection, rb.velocity);
+			//Debug.Log((wheelCos.transform.position - wheelAll.transform.position).magnitude);
+			//cameraPosition = 4*(wheelCos.transform.position - wheelAll.transform.position);
+			//cameraDistance = distance + dy;
+		//Debug.Log(Physics.gravity);
+//		Debug.DrawRay(this.transform.position, cameraPosition, Color.red);
+	//		Debug.Log(
+	
+//		cameraPosition = cameraDistance*(-1*forwardDirection.normalized);
+	//private float speed = 0;
+	//private Vector3 backwardDirection;
+	//private Vector3 cameraPosition;
+	//public float distance = 4;
+	//		float cameraDistance = distance;
+	//public float cameraPosition = 5;
 
 	
 }
