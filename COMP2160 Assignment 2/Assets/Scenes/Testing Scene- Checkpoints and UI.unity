@@ -565,6 +565,16 @@ PrefabInstance:
       propertyPath: restartButton
       value: 
       objectReference: {fileID: 80131090}
+    - target: {fileID: 2809646473296041664, guid: 5e7019deb4ad76f4f8965665f867d2a0,
+        type: 3}
+      propertyPath: checkpointTimes
+      value: 
+      objectReference: {fileID: 1239221364}
+    - target: {fileID: 2809646473296041664, guid: 5e7019deb4ad76f4f8965665f867d2a0,
+        type: 3}
+      propertyPath: checkpointTimeList
+      value: 
+      objectReference: {fileID: 1239221364}
     - target: {fileID: 2809646473296041670, guid: 5e7019deb4ad76f4f8965665f867d2a0,
         type: 3}
       propertyPath: m_Name
@@ -853,6 +863,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1798367350}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1239221364 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5095929623543978747, guid: a7278e3282331e0448940b8745ce4aa0,
+    type: 3}
+  m_PrefabInstance: {fileID: 813683772}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1244022790 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5095929624234718458, guid: a7278e3282331e0448940b8745ce4aa0,
