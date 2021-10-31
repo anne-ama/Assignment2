@@ -7,8 +7,10 @@ using UnityEngine;
 public class CarMovement : MonoBehaviour
 {
     public float accelerationSpeed = 10;
+	public float reverseSpeed = 5;
 	public float maxSpeed = 40;
-    public float reverseSpeed = 5;
+	public float maxAntiSpeed = 20;
+    //public float reverseSpeed = 5;
     public float turningSpeed = 30;
     public float drag = 0.2F;
 	private bool onGround = true;
@@ -52,29 +54,40 @@ public class CarMovement : MonoBehaviour
 			dy = Input.GetAxis("Vertical");
 			transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
 			
+			//if(dy>0)
 			if(dy!=0)
 			{
-				rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
 				float mag = rb.velocity.magnitude;
-				
-				Vector3 Cancellation = rb.velocity-forwardDirection;
-				if(mag>maxSpeed)
+				if(dy>0)
 				{
-					mag=maxSpeed;
+					if(mag<maxSpeed)
+					{
+						rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
+						rb.AddRelativeForce(drag*Vector3.back*dy);					
+					}
+
 				}
-				if(mag<-maxSpeed)
+				else
 				{
-					mag=-maxSpeed;
+					if(mag>-maxAntiSpeed)
+					{
+						rb.AddRelativeForce(reverseSpeed*Vector3.back*-dy);
+						rb.AddRelativeForce(drag*Vector3.back*dy);
+					}
 				}
 				if(mag>-5&&mag<5)
 				{
 					//Debug.Log("Checkpoint");
 					lastDY = dy;	
 				}
-				Debug.Log(mag+"(, )"+lastDY+"(, )"+dy);
+
 				rb.AddForce(- rb.velocity);
 				rb.AddRelativeForce(Vector3.forward*mag*lastDY);
-				rb.AddRelativeForce(drag*Vector3.back*dy);
+
+				//rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
+				
+				//Vector3 Cancellation = rb.velocity-forwardDirection;
+				Debug.Log(mag+"(, )"+lastDY+"(, )"+dy);
 			}
 			
 		}
