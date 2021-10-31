@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour
     public Text gameOverText;
     private string winText = "YOU WIN!";
     private string loseText = "YOU LOSE!";
-    
+    public Text checkpointTimes; 
     void Awake() 
     {
         if (instance != null)
@@ -45,15 +45,17 @@ public class UIManager : MonoBehaviour
         }
     }
 
-     void Start()
+    private void Start()
     {
         gameOverPanel.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
         timer = Time.realtimeSinceStartup;
-        timerText.text = "Timer: " + FormatTimeExtension.FormatTime(timer); 
+        timerText.text = "Timer: " + FormatTimeExtension.FormatTime(timer);
+        checkpointTimes.text = "\n" + 
+            FormatTimeExtension.FormatTime(GameManager.Instance.CheckpointTimeList[0]);
     }
 
     public void SetMaxHealth(int health)
@@ -82,7 +84,6 @@ public class UIManager : MonoBehaviour
 
     public void Restart()
     {
-        // reload the scene
         SceneManager.LoadScene(0);
         gameOverPanel.SetActive(false);
     }

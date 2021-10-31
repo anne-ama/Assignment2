@@ -18,6 +18,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private List<float> checkpointTimeList;
+    public List<float> CheckpointTimeList
+    {
+        get
+        {
+            return checkpointTimeList;
+        }
+    }
+
     void Awake()
     {
         if (instance != null) 
@@ -28,16 +37,16 @@ public class GameManager : MonoBehaviour
         else 
         {
             instance = this;
-        }        
+        }  
+
+        checkpointTimeList = new List<float>();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -53,5 +62,12 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Game Won!");
         UIManager.Instance.ShowGameOver(true);
+    }
+
+    public void CheckpointTimeRecord()
+    {
+        //Log the time that it passes through the checkpoint
+        checkpointTimeList.Add(Time.realtimeSinceStartup);
+        Debug.Log(Time.realtimeSinceStartup);
     }
 }

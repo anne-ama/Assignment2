@@ -123,6 +123,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &80131090 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5095929623138101100, guid: a7278e3282331e0448940b8745ce4aa0,
+    type: 3}
+  m_PrefabInstance: {fileID: 813683772}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &144689676
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,6 +560,11 @@ PrefabInstance:
       propertyPath: gameOverPanel
       value: 
       objectReference: {fileID: 1244022790}
+    - target: {fileID: 2809646473296041664, guid: 5e7019deb4ad76f4f8965665f867d2a0,
+        type: 3}
+      propertyPath: restartButton
+      value: 
+      objectReference: {fileID: 80131090}
     - target: {fileID: 2809646473296041670, guid: 5e7019deb4ad76f4f8965665f867d2a0,
         type: 3}
       propertyPath: m_Name
@@ -726,6 +743,42 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095929623138101100, guid: a7278e3282331e0448940b8745ce4aa0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095929623138101100, guid: a7278e3282331e0448940b8745ce4aa0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095929623138101100, guid: a7278e3282331e0448940b8745ce4aa0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2809646473296041664, guid: 5e7019deb4ad76f4f8965665f867d2a0,
+        type: 3}
+    - target: {fileID: 5095929623138101100, guid: a7278e3282331e0448940b8745ce4aa0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095929623138101100, guid: a7278e3282331e0448940b8745ce4aa0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Restart
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095929623138101100, guid: a7278e3282331e0448940b8745ce4aa0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095929623138101100, guid: a7278e3282331e0448940b8745ce4aa0,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 5095929624251918297, guid: a7278e3282331e0448940b8745ce4aa0,
         type: 3}

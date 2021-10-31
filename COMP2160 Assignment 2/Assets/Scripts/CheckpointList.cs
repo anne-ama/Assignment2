@@ -5,7 +5,6 @@ using UnityEngine;
 public class CheckpointList : MonoBehaviour
 {
     private List<CheckpointSingle> checkpointSingleList;
-    private List<float> checkpointTimeList;
     public Transform checkpointList;
     private int currentIndex;
     private CheckpointSingle checkpointSingle;
@@ -13,8 +12,6 @@ public class CheckpointList : MonoBehaviour
     private void Awake() {
         Transform checkpointsTransform = checkpointList;
         checkpointSingleList = new List<CheckpointSingle>();
-        checkpointTimeList = new List<float>();
-
         foreach (Transform checkpointSingleTransform in checkpointsTransform)
         {
             Debug.Log(checkpointSingleTransform);
@@ -34,12 +31,8 @@ public class CheckpointList : MonoBehaviour
     {
         if (checkpointSingleList.IndexOf(checkpointSingle) == currentIndex)
         {
-            Debug.Log("Correct Checkpoint");
-
-             //Log the time that it passes through the checkpoint
-            checkpointTimeList.Add(Time.realtimeSinceStartup);
-            Debug.Log(Time.realtimeSinceStartup);
-
+            GameManager.Instance.CheckpointTimeRecord();
+            
             //If this is the last checkpoint then indicate that it is the end of the game
             if (currentIndex == checkpointSingleList.Count - 1)
             {
