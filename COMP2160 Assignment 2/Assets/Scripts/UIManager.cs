@@ -32,6 +32,8 @@ public class UIManager : MonoBehaviour
     private string winText = "YOU WIN!";
     private string loseText = "YOU LOSE!";
     public Text checkpointTimes; 
+    private List<string> checkpointTimeList;
+
     void Awake() 
     {
         if (instance != null)
@@ -54,17 +56,24 @@ public class UIManager : MonoBehaviour
     {
         timer = Time.realtimeSinceStartup;
         timerText.text = "Timer: " + FormatTimeExtension.FormatTime(timer);
-        checkpointTimes.text = "\n" + 
-            FormatTimeExtension.FormatTime(GameManager.Instance.CheckpointTimeList[0]);
     }
 
-    public void SetMaxHealth(int health)
+    private void LateUpdate() {
+        foreach (float item in GameManager.Instance.CheckpointTimeList)
+        {
+            checkpointTimeList.Add(FormatTimeExtension.FormatTime(item) 
+                + "\n");
+            // Debug.Log(item);
+        }
+    }
+
+    private void SetMaxHealth(int health)
     {
         slider.maxValue = health;
         slider.value = health;
     }
 
-    public void SetHealth(int health)
+    private void SetHealth(int health)
     {
         slider.value = health;
     }
@@ -82,9 +91,20 @@ public class UIManager : MonoBehaviour
         gameOverPanel.SetActive(true);
     }
 
-    public void Restart()
+    private void Restart()
     {
         SceneManager.LoadScene(0);
         gameOverPanel.SetActive(false);
     }
+
+    // public void ConvertTimeToText()
+    // {
+    //     foreach (float item in GameManager.Instance.CheckpointTimeList)
+    //     {
+    //         checkpointTimeList.Add(FormatTimeExtension.FormatTime(item) 
+    //             + "\n");
+    //         Debug.Log(item);
+    //     }
+    // }
+
 }

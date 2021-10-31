@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
             return checkpointTimeList;
         }
     }
+    // private int i;
 
     void Awake()
     {
@@ -38,13 +39,12 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }  
-
-        checkpointTimeList = new List<float>();
     }
 
     void Start()
     {
-        
+        checkpointTimeList = new List<float>();
+        // i = 0;
     }
 
     void Update()
@@ -66,8 +66,8 @@ public class GameManager : MonoBehaviour
 
     public void CheckpointTimeRecord()
     {
-        //Log the time that it passes through the checkpoint
         checkpointTimeList.Add(Time.realtimeSinceStartup);
-        Debug.Log(Time.realtimeSinceStartup);
+        // Debug.Log(FormatTimeExtension.FormatTime(checkpointTimeList[i]));
+        // i++;
     }
 }
