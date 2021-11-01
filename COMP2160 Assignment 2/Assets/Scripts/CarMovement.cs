@@ -25,6 +25,7 @@ public class CarMovement : MonoBehaviour
 	public GameObject wheelTan;
 	private Vector3 forwardDirection;
 	private BoxCollider bc;
+	
 	// Start is called before the first frame update
     void Start()
     {
@@ -53,9 +54,10 @@ public class CarMovement : MonoBehaviour
 			dx = Input.GetAxis("Horizontal");
 			dy = Input.GetAxis("Vertical");
 			transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
-			
+			rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
+			Debug.Log(rb.velocity.magnitude);
 			//if(dy>0)
-			if(dy!=0)
+			/*if(dy!=0)
 			{
 				float mag = rb.velocity.magnitude;
 				if(dy>0)
@@ -75,9 +77,8 @@ public class CarMovement : MonoBehaviour
 						rb.AddRelativeForce(drag*Vector3.back*dy);
 					}
 				}
-				if(mag>-10&&mag<10)
+				if(mag>-5&&mag<5)
 				{
-					//Debug.Log("Checkpoint");
 					lastDY = dy;	
 				}
 				mag = rb.velocity.magnitude;
@@ -88,7 +89,7 @@ public class CarMovement : MonoBehaviour
 				
 				//Vector3 Cancellation = rb.velocity-forwardDirection;
 				Debug.Log(mag+"(, )"+lastDY+"(, )"+dy);
-			}
+			}*/
 			
 		}
 		else

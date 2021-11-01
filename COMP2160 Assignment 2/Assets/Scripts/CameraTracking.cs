@@ -6,6 +6,7 @@ public class CameraTracking : MonoBehaviour
 {
  
  public CarMovement target; 
+ public GameObject car;
  private float yLock;
  public float cameraDistance = 4;
  private Vector3 direction;
@@ -28,6 +29,7 @@ public class CameraTracking : MonoBehaviour
  { 
 	//lerpReadOnlyY = Mathf.Lerp(target.readOnlyY(),lerpReadOnlyY,decay);
 	
+	direction = car.forward;
 	direction = (4+target.readOnlyY())*(-target.ReadOnlyDir().normalized);
 	if(target.readOnlyY()!=0)
 	{
@@ -36,11 +38,11 @@ public class CameraTracking : MonoBehaviour
 	Debug.DrawRay(target.transform.position, direction, Color.blue);
 	Debug.DrawRay(target.transform.position, predir, Color.red);
 	destination = target.transform.position + direction;//new Vector3(direction.x, 0, direction.z);
-	Debug.Log("Direction: " + direction + "; Destination: " + destination + "; DY: "+target.readOnlyY()+"; DX: "+ target.readOnlyX()+";");
-	transform.position = destination;
-	//transform.position = Vector3.Lerp(transform.position, destination, decay);
-	//predir = Vector3.Lerp(transform.position, direction, decay);
 	transform.forward = -direction;
+
+	//Debug.Log("Direction: " + direction + "; Destination: " + destination + "; DY: "+target.readOnlyY()+"; DX: "+ target.readOnlyX()+";");
+	//transform.position = destination;
+	//predir = Vector3.Lerp(transform.position, direction, decay);
 	//transform.rotation = new Quaternion(0,target.transform.rotation.y,0,target.transform.rotation.w);
 	
 	
@@ -51,4 +53,10 @@ public class CameraTracking : MonoBehaviour
 	//transform.rotation = 
 	//transform.Translate(new Vector3(0,yLock-transform.position.y, 0));
  } 
+
+void LateUpdate()
+{
+	transform.position = Vector3.Lerp(transform.position, destination, decay);
+
+}
 }
