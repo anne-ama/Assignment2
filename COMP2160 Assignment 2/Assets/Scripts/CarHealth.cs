@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CarHealth : MonoBehaviour
 {
-    public float Health = 100;
+    public float health = 100;
 	public float damageThreshold = 50;
 	// Start is called before the first frame update
     void Start()
@@ -19,13 +19,13 @@ public class CarHealth : MonoBehaviour
     }
 	void OnCollisionEnter(Collision collision)
     {
-            Debug.Log(collision.impulse.magnitude);
-			if(collision.impulse.magnitude<damageThreshold)
+            Debug.Log("Collision Magnitude: " + collision.impulse.magnitude + ";");
+			if(collision.impulse.magnitude>damageThreshold)
 			{
+				health = health + damageThreshold - collision.impulse.magnitude;
+				Debug.Log("Health: " + health + ";");
 			}
-			else
-			{
-			}
+			
 			
     }
 

@@ -75,12 +75,12 @@ public class CarMovement : MonoBehaviour
 						rb.AddRelativeForce(drag*Vector3.back*dy);
 					}
 				}
-				if(mag>-5&&mag<5)
+				if(mag>-10&&mag<10)
 				{
 					//Debug.Log("Checkpoint");
 					lastDY = dy;	
 				}
-
+				mag = rb.velocity.magnitude;
 				rb.AddForce(- rb.velocity);
 				rb.AddRelativeForce(Vector3.forward*mag*lastDY);
 
