@@ -52,11 +52,12 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         gameOverPanel.SetActive(false);
+        timer = 0;
     }
 
     private void Update()
     {
-        timer = Time.realtimeSinceStartup;
+        timer += Time.deltaTime;
         timerText.text = "Timer: " + FormatTimeExtension.FormatTime(timer);
     }
 
@@ -93,11 +94,12 @@ public class UIManager : MonoBehaviour
 
     public void ConvertTimeToText()
     {
-        int i = 1;
+        int index = 1;
         foreach (float item in GameManager.Instance.CheckpointTimeList)
         {
-            checkpointList = checkpointList + "Checkpoint " + i + ": " + FormatTimeExtension.FormatTime(item) + "\n";
-            i++;
+            checkpointList = checkpointList + "Checkpoint " +
+                 index + ": " + FormatTimeExtension.FormatTime(item) + "\n";
+            index++;
         }
          checkpointTimes.text = checkpointList;
     }
