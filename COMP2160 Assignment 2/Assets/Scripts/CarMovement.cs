@@ -32,6 +32,7 @@ public class CarMovement : MonoBehaviour
 		rb = gameObject.GetComponent<Rigidbody>();
 		bc = gameObject.GetComponent<BoxCollider>();
 		rb.useGravity = true;
+		rb.centerOfMass = new Vector3(0,0.1f,0);
 		onGround = true;
     }
     // Update is called once per frame
@@ -56,40 +57,6 @@ public class CarMovement : MonoBehaviour
 			transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
 			rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
 			Debug.Log(rb.velocity.magnitude);
-			//if(dy>0)
-			/*if(dy!=0)
-			{
-				float mag = rb.velocity.magnitude;
-				if(dy>0)
-				{
-					if(mag<maxSpeed)
-					{
-						rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
-						rb.AddRelativeForce(drag*Vector3.back*dy);					
-					}
-
-				}
-				else
-				{
-					if(mag>-maxAntiSpeed)
-					{
-						rb.AddRelativeForce(reverseSpeed*Vector3.back*-dy);
-						rb.AddRelativeForce(drag*Vector3.back*dy);
-					}
-				}
-				if(mag>-5&&mag<5)
-				{
-					lastDY = dy;	
-				}
-				mag = rb.velocity.magnitude;
-				rb.AddForce(- rb.velocity);
-				rb.AddRelativeForce(Vector3.forward*mag*lastDY);
-
-				//rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
-				
-				//Vector3 Cancellation = rb.velocity-forwardDirection;
-				Debug.Log(mag+"(, )"+lastDY+"(, )"+dy);
-			}*/
 			
 		}
 		else
@@ -100,6 +67,13 @@ public class CarMovement : MonoBehaviour
 		Debug.DrawRay(this.transform.position, forwardDirection, Color.green);
 		
     }
+	void OnDrawGizmos()
+	{
+		rb = gameObject.GetComponent<Rigidbody>();
+		Gizmos.color = Color.red;
+		Gizmos.DrawRay(this.transform.position, rb.velocity);
+
+	}
 	void OnTriggerEnter(Collider other)// This needs to be edited to account for layers
 	{
 		//GameObject collider = other.gameObject;
@@ -132,13 +106,20 @@ public class CarMovement : MonoBehaviour
 	{
 		return forwardDirection;//.normalized
 	}
-	public float readOnlyX()
+	public float[] readOnlyXY()
 	{
-		return dx;
+		float[] dxy = new float[2];
+		dxy[0] = dx;
+		dxy[1] = dy;
+		return dxy;
 	}
 	public float readOnlyY()
 	{
 		return dy;
+	}
+	public float readOnlyX()
+	{
+		return dx;
 	}
 
 	
@@ -233,5 +214,66 @@ public class CarMovement : MonoBehaviour
 	//		float cameraDistance = distance;
 	//public float cameraPosition = 5;
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+				//if(dy>0)
+			/*if(dy!=0)
+			{
+				float mag = rb.velocity.magnitude;
+				if(dy>0)
+				{
+					if(mag<maxSpeed)
+					{
+						rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
+						rb.AddRelativeForce(drag*Vector3.back*dy);					
+					}
+
+				}
+				else
+				{
+					if(mag>-maxAntiSpeed)
+					{
+						rb.AddRelativeForce(reverseSpeed*Vector3.back*-dy);
+						rb.AddRelativeForce(drag*Vector3.back*dy);
+					}
+				}
+				if(mag>-5&&mag<5)
+				{
+					lastDY = dy;	
+				}
+				mag = rb.velocity.magnitude;
+				rb.AddForce(- rb.velocity);
+				rb.AddRelativeForce(Vector3.forward*mag*lastDY);
+
+				//rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
+				
+				//Vector3 Cancellation = rb.velocity-forwardDirection;
+				Debug.Log(mag+"(, )"+lastDY+"(, )"+dy);
+			}*/
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

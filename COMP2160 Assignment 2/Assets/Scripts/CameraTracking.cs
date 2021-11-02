@@ -8,13 +8,16 @@ public class CameraTracking : MonoBehaviour
  public CarMovement target; 
  public GameObject car;
  private float yLock;
- public float cameraDistance = 4;
+ public float cameraDistance = 1;
  private Vector3 direction;
  private Vector3 destination;
  private Vector3 predir;
+ public float threshold = 0.1f;
  public float decay = 0.1f;
- private float lerpReadOnlyY = 0;
- private float lerpReadOnlyX = 0;
+ private float preY = 0;
+ private float preX = 0;
+ private bool lerp = false;
+ private float[] preXY = new float[2];
 
 
 
@@ -25,21 +28,45 @@ public class CameraTracking : MonoBehaviour
     }
 
     // Update is called once per frame
- void Update() 
- { 
-	//lerpReadOnlyY = Mathf.Lerp(target.readOnlyY(),lerpReadOnlyY,decay);
-	
-	direction = car.forward;
-	direction = (4+target.readOnlyY())*(-target.ReadOnlyDir().normalized);
-	if(target.readOnlyY()!=0)
-	{
-		direction = Quaternion.Euler(Vector3.up*-30*target.readOnlyX())*direction;
-	}
-	Debug.DrawRay(target.transform.position, direction, Color.blue);
-	Debug.DrawRay(target.transform.position, predir, Color.red);
-	destination = target.transform.position + direction;//new Vector3(direction.x, 0, direction.z);
-	transform.forward = -direction;
+	void Update() 
+	{ 
+		for(int i = 0; i<2; i++)
+		{
+			if(Mathf.Abs(target.readOnlyXY()[i]-preXY[i])>threshold)
+			{
+				lerp=true;
+			}
+			preXY[i]=target.readOnlyXY()[i];
+		}
+		direction = (4+target.readOnlyY())*(-target.ReadOnlyDir().normalized);
+		if(target.readOnlyY()!=0)
+		{
+			direction = Quaternion.Euler(Vector3.up*-30*target.readOnlyX())*direction;
+		}
+		Debug.DrawRay(target.transform.position, direction, Color.blue);
+		if(lerp)
+		{
+			predir = Vector3.Lerp(predir, direction, decay);
+			if((direction-predir).magnitude<threshold)
+			{
+				lerp = false;
+			}
+		}
+		else
+		{
+			predir=direction;
+		}
+		destination = target.transform.position + predir;//new Vector3(direction.x, 0, direction.z);
+		transform.position = destination;
+		transform.forward = -predir;
 
+	/*Vector3 carViewPort = Camera.main.WorldToViewportPoint (target.transform.position);
+	Vector3 worldMiddleP = Camera.main.ViewportToWorldPoint(carViewPort + cameraDistance * Vector3.right * Input.GetAxis("Horizontal"));
+	transform.position = Vector3.Lerp(transform.position, worldMiddleP, Time.deltaTime * decay);
+	//lerpReadOnlyY = Mathf.Lerp(target.readOnlyY(),lerpReadOnlyY,decay);
+	//direction = car.forward;*/
+
+	
 	//Debug.Log("Direction: " + direction + "; Destination: " + destination + "; DY: "+target.readOnlyY()+"; DX: "+ target.readOnlyX()+";");
 	//transform.position = destination;
 	//predir = Vector3.Lerp(transform.position, direction, decay);
@@ -52,11 +79,13 @@ public class CameraTracking : MonoBehaviour
 	//transform.right = target.position - transform.position;
 	//transform.rotation = 
 	//transform.Translate(new Vector3(0,yLock-transform.position.y, 0));
+				//Debug.DrawRay(target.transform.position, predir, Color.red);
+			//transform.position = Vector3.Lerp(transform.position, destination, decay);
+
  } 
 
 void LateUpdate()
 {
-	transform.position = Vector3.Lerp(transform.position, destination, decay);
 
 }
 }
