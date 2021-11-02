@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Testing Scene- Checkpoints and UI.unity
+    guid: db71e50113f71484e8a06250c5eb48ef
   m_configObjects: {}
