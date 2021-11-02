@@ -992,7 +992,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!154 &1608010798
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -1247,7 +1247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 279458159}
   cameraDistance: 4
-  decay: 0.1
+  decay: 0.05
 --- !u!4 &543450652726583159
 Transform:
   m_ObjectHideFlags: 0
@@ -1280,7 +1280,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &919132149054473678
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1446,7 +1446,7 @@ PrefabInstance:
     - target: {fileID: 2055533793392795039, guid: b08ab53b0480e014989d0a5b71c89194,
         type: 3}
       propertyPath: m_Mass
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2055533793392795039, guid: b08ab53b0480e014989d0a5b71c89194,
         type: 3}
