@@ -26,8 +26,7 @@ public class GameManager : MonoBehaviour
             return checkpointTimeList;
         }
     }
-    // private int i;
-
+    
     void Awake()
     {
         if (instance != null) 
@@ -44,13 +43,11 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         checkpointTimeList = new List<float>();
-        // i = 0;
     }
 
-    void Update()
-    {
+    // private void Update() {
         
-    }
+    // }
 
     public void Die()
     {
@@ -60,6 +57,12 @@ public class GameManager : MonoBehaviour
 
     public void Win()
     {
+        // foreach (float item in checkpointTimeList)
+        // {
+        //     UIManager.Instance.CheckpointTimeList.Add(FormatTimeExtension.FormatTime(item) 
+        //         + "\n");
+        //     Debug.Log(item);
+        // }
         Debug.Log("Game Won!");
         UIManager.Instance.ShowGameOver(true);
     }
@@ -67,7 +70,5 @@ public class GameManager : MonoBehaviour
     public void CheckpointTimeRecord()
     {
         checkpointTimeList.Add(Time.realtimeSinceStartup);
-        // Debug.Log(FormatTimeExtension.FormatTime(checkpointTimeList[i]));
-        // i++;
     }
 }
