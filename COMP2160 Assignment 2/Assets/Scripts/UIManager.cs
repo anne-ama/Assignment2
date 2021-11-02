@@ -45,6 +45,8 @@ public class UIManager : MonoBehaviour
         {
             instance = this;
         }
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Start()
@@ -74,13 +76,11 @@ public class UIManager : MonoBehaviour
         if (win)
         {
             gameOverText.text = winText;
-            //checkpoint text should go here
             ConvertTimeToText();
         }
         else 
         {
             gameOverText.text = loseText;
-            //checkpoint text should go here
             ConvertTimeToText();
         }
         gameOverPanel.SetActive(true);
@@ -89,7 +89,6 @@ public class UIManager : MonoBehaviour
     private void Restart()
     {
         SceneManager.LoadScene(0);
-        gameOverPanel.SetActive(false);
     }
 
     public void ConvertTimeToText()
