@@ -94,7 +94,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 6
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5570599697977356684
 MonoBehaviour:
@@ -108,3 +108,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f3005626b93c50468c82bbe9d8594a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeColor: {r: 1, g: 0.8, b: 0.4, a: 1}
+  inactiveColor: {r: 0.5, g: 0.5, b: 0.4, a: 1}

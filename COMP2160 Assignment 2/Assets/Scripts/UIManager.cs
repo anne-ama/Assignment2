@@ -31,7 +31,9 @@ public class UIManager : MonoBehaviour
     public Text gameOverText;
     private string winText = "YOU WIN!";
     private string loseText = "YOU LOSE!";
-    
+    public Text checkpointTimes; 
+    private string checkpointList = "";
+
     void Awake() 
     {
         if (instance != null)
@@ -43,26 +45,29 @@ public class UIManager : MonoBehaviour
         {
             instance = this;
         }
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
-     void Start()
+    private void Start()
     {
         gameOverPanel.SetActive(false);
+        timer = 0;
     }
 
-    void Update()
+    private void Update()
     {
-        timer = Time.realtimeSinceStartup;
-        timerText.text = "Timer: " + FormatTimeExtension.FormatTime(timer); 
+        timer += Time.deltaTime;
+        timerText.text = "Timer: " + FormatTimeExtension.FormatTime(timer);
     }
 
-    public void SetMaxHealth(int health)
+    private void SetMaxHealth(int health)
     {
         slider.maxValue = health;
         slider.value = health;
     }
 
-    public void SetHealth(int health)
+    private void SetHealth(int health)
     {
         slider.value = health;
     }
@@ -72,18 +77,31 @@ public class UIManager : MonoBehaviour
         if (win)
         {
             gameOverText.text = winText;
+            ConvertTimeToText();
         }
         else 
         {
             gameOverText.text = loseText;
+            ConvertTimeToText();
         }
         gameOverPanel.SetActive(true);
     }
 
-    public void Restart()
+    private void Restart()
     {
-        // reload the scene
         SceneManager.LoadScene(0);
-        gameOverPanel.SetActive(false);
     }
+
+    public void ConvertTimeToText()
+    {
+        int index = 1;
+        foreach (float item in GameManager.Instance.CheckpointTimeList)
+        {
+            checkpointList = checkpointList + "Checkpoint " +
+                 index + ": " + FormatTimeExtension.FormatTime(item) + "\n";
+            index++;
+        }
+         checkpointTimes.text = checkpointList;
+    }
+
 }

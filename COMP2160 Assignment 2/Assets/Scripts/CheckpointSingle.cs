@@ -9,7 +9,7 @@ public class CheckpointSingle : MonoBehaviour
     public Color inactiveColor = new Color(0.5f, 0.5f, 0.4f, 1.0f);
 
     private void Start() {
-        notActive();
+        checkpointList.ActivateNextCheckpoint();
     }
 
     private void OnTriggerEnter(Collider other) 
@@ -17,16 +17,9 @@ public class CheckpointSingle : MonoBehaviour
         GameObject collider = other.gameObject;
         if (Layers.Instance.checkpoint.Contains(collider))
         {
-            //probably call is active from the other script??
-            isActive();
+            this.notActive();
             checkpointList.PlayerThroughCheckpoint(this);
-
         }
-    }
-
-    private void OnTriggerExit(Collider other) 
-    {
-        notActive();
     }
 
     public void isActive()

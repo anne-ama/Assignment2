@@ -5,16 +5,13 @@ using UnityEngine;
 public class CheckpointList : MonoBehaviour
 {
     private List<CheckpointSingle> checkpointSingleList;
-    private List<float> checkpointTimeList;
     public Transform checkpointList;
-    private int nextCheckpointSingleIndex;
+    private int currentIndex;
     private CheckpointSingle checkpointSingle;
 
     private void Awake() {
-        //Adding checkpoints to the list to track 
         Transform checkpointsTransform = checkpointList;
         checkpointSingleList = new List<CheckpointSingle>();
-        checkpointTimeList = new List<float>();
         foreach (Transform checkpointSingleTransform in checkpointsTransform)
         {
             Debug.Log(checkpointSingleTransform);
@@ -22,31 +19,34 @@ public class CheckpointList : MonoBehaviour
             checkpointSingle.SetCheckpointList(this);
             checkpointSingleList.Add(checkpointSingle);
         }
-        nextCheckpointSingleIndex = 0;
+        currentIndex = 0;
+    }
+
+    public void ActivateNextCheckpoint()
+    {
+        checkpointSingleList[currentIndex].isActive();
     }
 
     public void PlayerThroughCheckpoint(CheckpointSingle checkpointSingle)
     {
-        if (checkpointSingleList.IndexOf(checkpointSingle) == nextCheckpointSingleIndex)
+        if (checkpointSingleList.IndexOf(checkpointSingle) == currentIndex)
         {
-            //Correct checkpoint passed through
-            Debug.Log("Correct Checkpoint");
-            //this loops back to 0 however this may be unnecessary
-            // nextCheckpointSingleIndex = (nextCheckpointSingleIndex + 1) % checkpointSingleList.Count;
-            nextCheckpointSingleIndex++;
-            checkpointSingle.isActive();
-            checkpointTimeList.Add(Time.realtimeSinceStartup);
-            Debug.Log(Time.realtimeSinceStartup);
-
-            if (nextCheckpointSingleIndex >= checkpointSingleList.Count)
+            GameManager.Instance.CheckpointTimeRecord();
+            
+            //If this is the last checkpoint then indicate that it is the end of the game
+            if (currentIndex == checkpointSingleList.Count - 1)
             {
-                Debug.Log("last checkpoint");
+                GameManager.Instance.Win();
             }
+            else {
+                currentIndex++;
+                ActivateNextCheckpoint();
+            }
+
         }
         else
         {
             checkpointSingle.notActive();
-            //wrong checkpoint passed through
             Debug.Log("Wrong Checkpoint");
         }
     }
