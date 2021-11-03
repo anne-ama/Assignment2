@@ -6,7 +6,7 @@ public class CameraTracking : MonoBehaviour
 {
  
  public CarMovement target; 
- public GameObject car;
+ //public GameObject car;
  private float yLock;
  public float cameraDistance = 1;
  private Vector3 direction;

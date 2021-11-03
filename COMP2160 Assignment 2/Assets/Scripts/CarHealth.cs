@@ -5,17 +5,32 @@ using UnityEngine;
 public class CarHealth : MonoBehaviour
 {
     public float health = 100;
-	public float damageThreshold = 50;
+	public float damageThreshold = 10;
+	public float restoration = 5;
+	public float smokeThreshold = 25;
+	public GameObject Smoke;
+	private ParticleSystem smokeSystem;
+	public GameObject Explosion;
+	private ParticleSystem explosionSystem;
+	
+	private Rigidbody rb;
 	// Start is called before the first frame update
     void Start()
     {
-        
+		rb = gameObject.GetComponent<Rigidbody>();
+		smokeSystem = Smoke.gameObject.GetComponent<ParticleSystem>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
         
+		if(health<=smokeThreshold)
+		{
+			Smoke.transform.position = transform.position;
+			smokeSystem.Play();
+		}
     }
 	void OnCollisionEnter(Collision collision)
     {

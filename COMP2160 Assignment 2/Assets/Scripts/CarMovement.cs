@@ -17,6 +17,7 @@ public class CarMovement : MonoBehaviour
 	private float lastDY;
 	private	float dx;
 	private float dy;
+	public float turn = 4;
 	//I am coding the wheels into the game so i can get which direction is forward. And i have named the wheels into the game based on where they would be on a unit circle
 	public GameObject wheelAll;
 	public GameObject wheelSin;
@@ -66,10 +67,11 @@ public class CarMovement : MonoBehaviour
 			}
 			if(dy!=0)
 			{
-				transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
+				transform.Rotate(Vector3.up*rb.velocity.magnitude*turningSpeed*dx/turn);//(turningSpeed*upDirection*dx*Time.deltaTime)(dz * turnRadius * (rb.velocity.magnitude / velocityTurnPower)
+
 			}
 			Debug.Log(rb.velocity.magnitude);
-			
+			//
 		}
 		else
 		{
@@ -80,6 +82,10 @@ public class CarMovement : MonoBehaviour
 		Debug.DrawRay(this.transform.position, upDirection, Color.green);
 		Debug.DrawRay(this.transform.position, forwardDirection, Color.blue);
     }
+	void FixedUpdate()
+	{
+		
+	}
 	void OnDrawGizmos()
 	{
 		rb = gameObject.GetComponent<Rigidbody>();
