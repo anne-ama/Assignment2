@@ -28,12 +28,14 @@ public class CarMovement : MonoBehaviour
 	private Vector3 rightDirection;
 	private Vector3 upDirection;
 	private BoxCollider bc;
+	public GameObject Trigger;
 	
 	// Start is called before the first frame update
     void Start()
     {
 		rb = gameObject.GetComponent<Rigidbody>();
-		bc = gameObject.GetComponent<BoxCollider>();
+		bc = Trigger.GetComponent<BoxCollider>();
+		bc.isTrigger = true;
 		rb.useGravity = true;
 		rb.centerOfMass = new Vector3(0,0.1f,0);
 		onGround = true;
@@ -95,6 +97,13 @@ public class CarMovement : MonoBehaviour
 	}
 	void OnTriggerEnter(Collider other)// This needs to be edited to account for layers
 	{
+		GameObject collider = other.gameObject;
+		
+		if(Layers.Instance.player.Contains(collider))
+		{
+			Debug.Log("Movement is true");
+		}
+		
 		//GameObject collider = other.gameObject;
 		//if(Layers.pl.Terr
 		//if(other.name=="Terrain")
@@ -105,9 +114,10 @@ public class CarMovement : MonoBehaviour
 	}
 	void OnTriggerExit(Collider other)// This needs to be edited to account for layers
 	{
-		notGrounded();
+		GameObject collider = other.gameObject;
+		//notGrounded();
 		//LayerMask.LayerToName(
-		if(other.name=="Terrain")
+		if(Layers.Instance.player.Contains(collider) == false)
 		{
 			Debug.Log("False");
 		}

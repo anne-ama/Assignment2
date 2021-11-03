@@ -49,3 +49,6 @@ MonoBehaviour:
   checkpoint:
     serializedVersion: 2
     m_Bits: 192
+  ground:
+    serializedVersion: 2
+    m_Bits: 256

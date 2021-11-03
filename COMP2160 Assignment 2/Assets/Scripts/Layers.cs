@@ -19,6 +19,7 @@ public class Layers : MonoBehaviour
 
     public LayerMask player;
     public LayerMask checkpoint;
+	public LayerMask ground;
     
     void Awake()
     {   
