@@ -43,7 +43,7 @@ public class CameraTracking : MonoBehaviour
 		{
 			direction = Quaternion.Euler(Vector3.up*-30*target.readOnlyX())*direction;
 		}
-		Debug.DrawRay(target.transform.position, direction, Color.blue);
+		Debug.DrawRay(target.transform.position, direction, Color.cyan);
 		if(lerp)
 		{
 			predir = Vector3.Lerp(predir, direction, decay);
@@ -56,10 +56,10 @@ public class CameraTracking : MonoBehaviour
 		{
 			predir=direction;
 		}
-		destination = target.transform.position + predir;//new Vector3(direction.x, 0, direction.z);
+		destination = target.transform.position + predir;
 		transform.position = destination;
 		transform.forward = -predir;
-
+	//new Vector3(direction.x, 0, direction.z);
 	/*Vector3 carViewPort = Camera.main.WorldToViewportPoint (target.transform.position);
 	Vector3 worldMiddleP = Camera.main.ViewportToWorldPoint(carViewPort + cameraDistance * Vector3.right * Input.GetAxis("Horizontal"));
 	transform.position = Vector3.Lerp(transform.position, worldMiddleP, Time.deltaTime * decay);

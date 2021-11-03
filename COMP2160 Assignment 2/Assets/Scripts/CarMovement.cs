@@ -10,7 +10,6 @@ public class CarMovement : MonoBehaviour
 	public float reverseSpeed = 5;
 	public float maxSpeed = 40;
 	public float maxAntiSpeed = 20;
-    //public float reverseSpeed = 5;
     public float turningSpeed = 30;
     public float drag = 0.2F;
 	private bool onGround = true;
@@ -23,7 +22,10 @@ public class CarMovement : MonoBehaviour
 	public GameObject wheelSin;
 	public GameObject wheelCos;
 	public GameObject wheelTan;
+	public GameObject body;
 	private Vector3 forwardDirection;
+	private Vector3 rightDirection;
+	private Vector3 upDirection;
 	private BoxCollider bc;
 	
 	// Start is called before the first frame update
@@ -39,6 +41,10 @@ public class CarMovement : MonoBehaviour
     void Update()
     {
 		forwardDirection = accelerationSpeed*(wheelAll.transform.position - wheelCos.transform.position);
+		rightDirection = accelerationSpeed*(wheelAll.transform.position - wheelSin.transform.position);
+		upDirection = accelerationSpeed*((wheelAll.transform.position+wheelSin.transform.position+wheelTan.transform.position+wheelCos.transform.position)/4-body.transform.position);
+		//upDirection = Quaternion.Euler(rightDirection*-90)*forwardDirection*accelerationSpeed;
+		
 		if(Input.GetKeyDown(KeyCode.Space))//test function that will be removed later
 		{
 			if(onGround)
@@ -54,8 +60,14 @@ public class CarMovement : MonoBehaviour
 		{
 			dx = Input.GetAxis("Horizontal");
 			dy = Input.GetAxis("Vertical");
-			transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
-			rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
+			if(rb.velocity.magnitude==0||(rb.velocity.magnitude<maxSpeed&&dy>0)||(rb.velocity.magnitude<maxAntiSpeed&&dy<0))
+			{
+				rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);	
+			}
+			if(dy!=0)
+			{
+				transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
+			}
 			Debug.Log(rb.velocity.magnitude);
 			
 		}
@@ -64,13 +76,14 @@ public class CarMovement : MonoBehaviour
 			dx = 0;
 			dy = 0;
 		}
-		Debug.DrawRay(this.transform.position, forwardDirection, Color.green);
-		
+		Debug.DrawRay(this.transform.position, rightDirection, Color.red);
+		Debug.DrawRay(this.transform.position, upDirection, Color.green);
+		Debug.DrawRay(this.transform.position, forwardDirection, Color.blue);
     }
 	void OnDrawGizmos()
 	{
 		rb = gameObject.GetComponent<Rigidbody>();
-		Gizmos.color = Color.red;
+		Gizmos.color = Color.yellow;
 		Gizmos.DrawRay(this.transform.position, rb.velocity);
 
 	}
@@ -267,7 +280,8 @@ public class CarMovement : MonoBehaviour
 	
 	
 	
-	
+	    //public float reverseSpeed = 5;
+
 	
 	
 	
