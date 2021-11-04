@@ -43,9 +43,6 @@ public class CarMovement : MonoBehaviour
 	//Alternate velocity. This will flip the Velocity's "rightDirection" value, giving an alternate
 	private float altAngle;
 	
-	public bool gameOver;
-	
-	
 	//public GameObject Trigger;
 	
 	// Start is called before the first frame update
@@ -72,7 +69,7 @@ public class CarMovement : MonoBehaviour
 		{
 			transform.Rotate(turningSpeed*yDir*dx*Time.deltaTime);//(turningSpeed*upDirection*dx*Time.deltaTime)(dz * turnRadius * (rb.velocity.magnitude / velocityTurnPower)			
 		}
-		/*altAngle = Vector3.SignedAngle(zDir,rb.velocity,yDir);
+		altAngle = Vector3.SignedAngle(zDir,rb.velocity,yDir);
 		if(altAngle>90)
 		{
 			altAngle = altAngle - 180;
@@ -82,45 +79,24 @@ public class CarMovement : MonoBehaviour
 			altAngle = altAngle + 180;
 		}
 		altVel = Quaternion.Euler(yDir*(-altAngle)*2)*rb.velocity;
-		*/
-		Debug.Log("Speed: "+rb.velocity.magnitude +"; Alternate Velocity: "+GetAlternate()+"; Velocity Angle: " + altAngle + ";");
-		//Debug.Log(rb.velocity.magnitude*accelerationSpeed*GetAlternate()*dy);
+		
+		Debug.Log("Speed: "+rb.velocity.magnitude);
 
     }
 	void FixedUpdate()
 	{
 		if(onGround&&(rb.velocity.magnitude==0||(rb.velocity.magnitude<maxSpeed&&dy>0)||(rb.velocity.magnitude<maxAntiSpeed&&dy<0)))
 		{
-			rb.AddRelativeForce(halfSpeed*Vector3.forward*dy);
-			rb.AddForce(halfSpeed*GetAlternate()*dy);
+			if(rb.velocity.magnitude==0)
 			
-			//if((altAngle<10&&altAngle>-10)||rb.velocity.magnitude<20)
-			//{
-				//rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
-			//}
-			//else
-			//{
-			//Debug.Log(rb.velocity.magnitude*accelerationSpeed*GetAlternate()*dy);
-				//rb.AddForce(rb.velocity.magnitude*accelerationSpeed*GetAlternate()*dy);
-			//}
-				//rb.AddForce(altVel.normalized*accelerationSpeed*dy);//
-						
 			//rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
 			//rb.AddForce(accelerationSpeed*zDir*dy);
+			rb.AddForce(altVel.normalized*accelerationSpeed*dy);//
 			//rb.AddForce(altVel);//
 			//Vector3 relativeAltAngle = Quaternion.Euler(Vector3.up*(-altAngle))*Vector3.forward;
 			//rb.AddRelativeForce(halfSpeed*relativeAltAngle*dy);
 			//rb.AddForce(accelerationSpeed*altVel*dy);
 		}
-	}
-	public Vector3 GetAlternate()
-	{
-		if(rb.velocity.magnitude<20)
-		{
-			return zDir;
-		}
-		altAngle = Vector3.SignedAngle(zDir,rb.velocity,yDir);
-		return Quaternion.Euler(yDir*(-altAngle)*2)*rb.velocity;
 	}
 	void OnDrawGizmos()
 	{
@@ -136,9 +112,9 @@ public class CarMovement : MonoBehaviour
 		Gizmos.color = Color.cyan;
 		Gizmos.DrawRay(this.transform.position, altVel);
 		Gizmos.color = Color.white;
-		//Gizmos.DrawRay(this.transform.position, accelerationSpeed*zDir*dy);
+		Gizmos.DrawRay(this.transform.position, accelerationSpeed*zDir*dy);
 		Gizmos.color = Color.black;
-		//Gizmos.DrawRay(this.transform.position, halfSpeed*altVel);
+		Gizmos.DrawRay(this.transform.position, halfSpeed*altVel);
 		
 	}
 	void OnTriggerStay(Collider other)// This needs to be edited to account for layers
@@ -160,7 +136,6 @@ public class CarMovement : MonoBehaviour
 			notGrounded();
 		}
 	}
-	
 	public void isGrounded()
 	{
 		onGround = true;
@@ -189,6 +164,4 @@ public class CarMovement : MonoBehaviour
 		}
 		return dxy;
 	}
-	
-	
 }

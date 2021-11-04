@@ -41,7 +41,7 @@ public class CameraTracking : MonoBehaviour
 		{
 			direction = Quaternion.Euler(Vector3.up*-30*target.readOnlyXY()[0])*direction;
 		}
-		Debug.DrawRay(target.transform.position, direction, Color.cyan);
+		//Debug.DrawRay(target.transform.position, direction, Color.cyan);
 		if(lerp)
 		{
 			predir = Vector3.Lerp(predir, direction, decay);
@@ -57,10 +57,11 @@ public class CameraTracking : MonoBehaviour
 		destination = target.transform.position + predir;
 		transform.position = destination;
 		transform.forward = -predir;
- } 
+	} 
 
-void LateUpdate()
-{
-
-}
+	void OnDrawGizmos()
+	{
+		Gizmos.color = Color.magenta;
+		Gizmos.DrawRay(target.transform.position, direction);
+	}
 }

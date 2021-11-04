@@ -12,36 +12,42 @@ public class CarHealth : MonoBehaviour
 	private ParticleSystem smokeSystem;
 	public GameObject Explosion;
 	private ParticleSystem explosionSystem;
-	
+	private bool gameOver;
 	private Rigidbody rb;
 	// Start is called before the first frame update
     void Start()
     {
 		rb = gameObject.GetComponent<Rigidbody>();
 		smokeSystem = Smoke.gameObject.GetComponent<ParticleSystem>();
-
+		explosionSystem = Explosion.gameObject.GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-		if(health<=smokeThreshold)
+        if(!gameOver&&health<=0)
 		{
-			Smoke.transform.position = transform.position;
+			kill();
+		}
+		else if(health<=smokeThreshold)
+		{
+			//Smoke.transform.position = transform.position;
 			smokeSystem.Play();
 		}
     }
 	void OnCollisionEnter(Collision collision)
     {
-            Debug.Log("Collision Magnitude: " + collision.impulse.magnitude + ";");
-			if(collision.impulse.magnitude>damageThreshold)
-			{
-				health = health + damageThreshold - collision.impulse.magnitude;
-				Debug.Log("Health: " + health + ";");
-			}
-			
-			
+        Debug.Log("Collision Magnitude: " + collision.impulse.magnitude + ";");
+		if(collision.impulse.magnitude>damageThreshold)
+		{
+			health = health + damageThreshold - collision.impulse.magnitude;
+			Debug.Log("Health: " + health + ";");
+		}
     }
+	void kill()
+	{
+		explosionSystem.Play();
+		gameOver = true;
+	}
 
 }

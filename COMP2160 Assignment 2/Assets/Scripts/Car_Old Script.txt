@@ -203,7 +203,16 @@
 	
 	
 	
-	
+		public Vector3 GetAlternate()
+	{
+		if(rb.velocity.magnitude<20)
+		{
+			return zDir;
+		}
+		altAngle = Vector3.SignedAngle(zDir,rb.velocity,yDir);
+		return Quaternion.Euler(yDir*(-altAngle)*2)*rb.velocity;
+	}
+
 	
 	
 	
