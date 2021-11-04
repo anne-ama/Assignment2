@@ -6,19 +6,26 @@ using UnityEngine;
 
 public class CarMovement : MonoBehaviour
 {
-    public float accelerationSpeed = 10;
+	private Rigidbody rb;
+	private BoxCollider bc;
+
+    //Driving Parameters
+	private bool onGround = true;
+    public LayerMask groundLayer;
+
+	//Speed Parameters
+	public float accelerationSpeed = 10;
 	public float reverseSpeed = 5;
 	public float maxSpeed = 40;
 	public float maxAntiSpeed = 20;
     public float turningSpeed = 30;
     public float drag = 0.2F;
-	private bool onGround = true;
-	private Rigidbody rb;
+
 	private float lastDY;
 	private	float dx;
 	private float dy;
 	public float turn = 4;
-	//I am coding the wheels into the game so i can get which direction is forward. And i have named the wheels into the game based on where they would be on a unit circle
+	//Directional Coding
 	public GameObject wheelAll;
 	public GameObject wheelSin;
 	public GameObject wheelCos;
@@ -27,14 +34,13 @@ public class CarMovement : MonoBehaviour
 	private Vector3 forwardDirection;
 	private Vector3 rightDirection;
 	private Vector3 upDirection;
-	private BoxCollider bc;
-	public GameObject Trigger;
+	//public GameObject Trigger;
 	
 	// Start is called before the first frame update
     void Start()
     {
 		rb = gameObject.GetComponent<Rigidbody>();
-		bc = Trigger.GetComponent<BoxCollider>();
+		bc = gameObject.GetComponent<BoxCollider>();
 		bc.isTrigger = true;
 		rb.useGravity = true;
 		rb.centerOfMass = new Vector3(0,0.1f,0);
@@ -47,18 +53,6 @@ public class CarMovement : MonoBehaviour
 		rightDirection = accelerationSpeed*(wheelAll.transform.position - wheelSin.transform.position);
 		upDirection = accelerationSpeed*((wheelAll.transform.position+wheelSin.transform.position+wheelTan.transform.position+wheelCos.transform.position)/4-body.transform.position);
 		//upDirection = Quaternion.Euler(rightDirection*-90)*forwardDirection*accelerationSpeed;
-		
-		if(Input.GetKeyDown(KeyCode.Space))//test function that will be removed later
-		{
-			if(onGround)
-			{
-				onGround = false;
-			}
-			else
-			{
-				onGround = true;
-			}
-		}
 		if(onGround)
 		{
 			dx = Input.GetAxis("Horizontal");
@@ -72,8 +66,8 @@ public class CarMovement : MonoBehaviour
 				transform.Rotate(Vector3.up*rb.velocity.magnitude*turningSpeed*dx/turn);//(turningSpeed*upDirection*dx*Time.deltaTime)(dz * turnRadius * (rb.velocity.magnitude / velocityTurnPower)
 
 			}
-			Debug.Log(rb.velocity.magnitude);
-			//
+			
+			Debug.Log("Speed: "+rb.velocity.magnitude);
 		}
 		else
 		{
@@ -95,31 +89,23 @@ public class CarMovement : MonoBehaviour
 		Gizmos.DrawRay(this.transform.position, rb.velocity);
 
 	}
-	void OnTriggerEnter(Collider other)// This needs to be edited to account for layers
+	void OnTriggerStay(Collider other)// This needs to be edited to account for layers
 	{
+
 		GameObject collider = other.gameObject;
 		
-		if(Layers.Instance.player.Contains(collider))
+		if(groundLayer.Contains(collider))//Layers.Instance.player.Contains(collider)
 		{
-			Debug.Log("Movement is true");
+			isGrounded();
 		}
 		
-		//GameObject collider = other.gameObject;
-		//if(Layers.pl.Terr
-		//if(other.name=="Terrain")
-		//{
-		//	isGrounded();
-		//	Debug.Log("True");
-		//}
 	}
 	void OnTriggerExit(Collider other)// This needs to be edited to account for layers
 	{
 		GameObject collider = other.gameObject;
-		//notGrounded();
-		//LayerMask.LayerToName(
-		if(Layers.Instance.player.Contains(collider) == false)
+		if(groundLayer.Contains(collider))
 		{
-			Debug.Log("False");
+			notGrounded();
 		}
 	}
 	public void isGrounded()
@@ -150,160 +136,4 @@ public class CarMovement : MonoBehaviour
 	{
 		return dx;
 	}
-
-	
-	
-	
-	//public Vector3[][] 
-//OldCode
-    //private State state;
-		//state = State.OnGround;
-	//private BoxCollider groundCollider;
-
-		/*switch (state)
-        {
-            case State.OnGround:
-					dx = Input.GetAxis("Horizontal");
-					dy = Input.GetAxis("Vertical");
-					if(dy!=0)
-					{
-						transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
-					}
-					Debug.Log("State = Rise");
-					state = State.InAir;
-            break;
-            case State.InAir:
-					dx = Input.GetAxis("Horizontal");
-					dy = Input.GetAxis("Vertical");
-					if(dy!=0)
-					{
-						transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
-					}
-					Debug.Log("State = Rise");
-					state = State.UpSideDown;
-                  break;
-            case State.UpSideDown:
-                
-					dx = Input.GetAxis("Horizontal");
-					dy = Input.GetAxis("Vertical");
-					if(dy!=0)
-					{
-						transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
-					}
-					Debug.Log("State = Rise");
-					state = State.OnGround;
-                
-				break;
-		}*/	
-	/*private enum State {
-        OnGround,
-        InAir,
-		UpSideDown
-    }*/
-	   /*void FixedUpdate()
-    {
-		if(Input.GetAxis("Vertical")!=0)
-		{
-		}
-		rb.velocity = rb.velocity + velocity*Time.fixedDeltaTime;
-		rb.AddForce(velocity);
-    }*/
-			/*speed = speed + accelerationSpeed*dy*Time.deltaTime;
-			
-			if(speed>maxSpeed)
-			{
-				speed = maxSpeed;
-			}
-			if(speed<-maxSpeed)
-			{
-				speed = -maxSpeed;
-			}
-			Debug.Log(speed);
-			transform.Translate(Vector3.forward*speed*Time.deltaTime);
-		*/
-				//rb.AddForce(forwardDirection*lastDY - rb.velocity);
-
-				//Debug.Log(velocityAngle);
-				//Debug.Log(Quaternion.Euler(forwardDirection.x, forwardDirection.y, forwardDirection.z));
-
-					//Debug.Log("Forwards: " + forwardDirection + "; Velocity: "+rb.velocity+"; Subtraction: " + (forwardDirection - rb.velocity) +";");
-				//float velocityAngle = Vector3.Angle(forwardDirection, rb.velocity);
-			//Debug.Log((wheelCos.transform.position - wheelAll.transform.position).magnitude);
-			//cameraPosition = 4*(wheelCos.transform.position - wheelAll.transform.position);
-			//cameraDistance = distance + dy;
-		//Debug.Log(Physics.gravity);
-//		Debug.DrawRay(this.transform.position, cameraPosition, Color.red);
-	//		Debug.Log(
-	
-//		cameraPosition = cameraDistance*(-1*forwardDirection.normalized);
-	//private float speed = 0;
-	//private Vector3 backwardDirection;
-	//private Vector3 cameraPosition;
-	//public float distance = 4;
-	//		float cameraDistance = distance;
-	//public float cameraPosition = 5;
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-				//if(dy>0)
-			/*if(dy!=0)
-			{
-				float mag = rb.velocity.magnitude;
-				if(dy>0)
-				{
-					if(mag<maxSpeed)
-					{
-						rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
-						rb.AddRelativeForce(drag*Vector3.back*dy);					
-					}
-
-				}
-				else
-				{
-					if(mag>-maxAntiSpeed)
-					{
-						rb.AddRelativeForce(reverseSpeed*Vector3.back*-dy);
-						rb.AddRelativeForce(drag*Vector3.back*dy);
-					}
-				}
-				if(mag>-5&&mag<5)
-				{
-					lastDY = dy;	
-				}
-				mag = rb.velocity.magnitude;
-				rb.AddForce(- rb.velocity);
-				rb.AddRelativeForce(Vector3.forward*mag*lastDY);
-
-				//rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
-				
-				//Vector3 Cancellation = rb.velocity-forwardDirection;
-				Debug.Log(mag+"(, )"+lastDY+"(, )"+dy);
-			}*/
-
-	
-	
-	
-	
-	
-	
-	
-	    //public float reverseSpeed = 5;
-
-	
-	
-	
-	
-	
-	
-	
-	
 }

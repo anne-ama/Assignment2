@@ -1,0 +1,175 @@
+	//public Vector3[][] 
+//OldCode
+    //private State state;
+		//state = State.OnGround;
+	//private BoxCollider groundCollider;
+
+		/*switch (state)
+        {
+            case State.OnGround:
+					dx = Input.GetAxis("Horizontal");
+					dy = Input.GetAxis("Vertical");
+					if(dy!=0)
+					{
+						transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
+					}
+					Debug.Log("State = Rise");
+					state = State.InAir;
+            break;
+            case State.InAir:
+					dx = Input.GetAxis("Horizontal");
+					dy = Input.GetAxis("Vertical");
+					if(dy!=0)
+					{
+						transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
+					}
+					Debug.Log("State = Rise");
+					state = State.UpSideDown;
+                  break;
+            case State.UpSideDown:
+                
+					dx = Input.GetAxis("Horizontal");
+					dy = Input.GetAxis("Vertical");
+					if(dy!=0)
+					{
+						transform.Rotate(turningSpeed*Vector3.up*dx*Time.deltaTime);
+					}
+					Debug.Log("State = Rise");
+					state = State.OnGround;
+                
+				break;
+		}*/	
+	/*private enum State {
+        OnGround,
+        InAir,
+		UpSideDown
+    }*/
+	   /*void FixedUpdate()
+    {
+		if(Input.GetAxis("Vertical")!=0)
+		{
+		}
+		rb.velocity = rb.velocity + velocity*Time.fixedDeltaTime;
+		rb.AddForce(velocity);
+    }*/
+			/*speed = speed + accelerationSpeed*dy*Time.deltaTime;
+			
+			if(speed>maxSpeed)
+			{
+				speed = maxSpeed;
+			}
+			if(speed<-maxSpeed)
+			{
+				speed = -maxSpeed;
+			}
+			Debug.Log(speed);
+			transform.Translate(Vector3.forward*speed*Time.deltaTime);
+		*/
+				//rb.AddForce(forwardDirection*lastDY - rb.velocity);
+
+				//Debug.Log(velocityAngle);
+				//Debug.Log(Quaternion.Euler(forwardDirection.x, forwardDirection.y, forwardDirection.z));
+
+					//Debug.Log("Forwards: " + forwardDirection + "; Velocity: "+rb.velocity+"; Subtraction: " + (forwardDirection - rb.velocity) +";");
+				//float velocityAngle = Vector3.Angle(forwardDirection, rb.velocity);
+			//Debug.Log((wheelCos.transform.position - wheelAll.transform.position).magnitude);
+			//cameraPosition = 4*(wheelCos.transform.position - wheelAll.transform.position);
+			//cameraDistance = distance + dy;
+		//Debug.Log(Physics.gravity);
+//		Debug.DrawRay(this.transform.position, cameraPosition, Color.red);
+	//		Debug.Log(
+	
+//		cameraPosition = cameraDistance*(-1*forwardDirection.normalized);
+	//private float speed = 0;
+	//private Vector3 backwardDirection;
+	//private Vector3 cameraPosition;
+	//public float distance = 4;
+	//		float cameraDistance = distance;
+	//public float cameraPosition = 5;
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+				//if(dy>0)
+			/*if(dy!=0)
+			{
+				float mag = rb.velocity.magnitude;
+				if(dy>0)
+				{
+					if(mag<maxSpeed)
+					{
+						rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
+						rb.AddRelativeForce(drag*Vector3.back*dy);					
+					}
+
+				}
+				else
+				{
+					if(mag>-maxAntiSpeed)
+					{
+						rb.AddRelativeForce(reverseSpeed*Vector3.back*-dy);
+						rb.AddRelativeForce(drag*Vector3.back*dy);
+					}
+				}
+				if(mag>-5&&mag<5)
+				{
+					lastDY = dy;	
+				}
+				mag = rb.velocity.magnitude;
+				rb.AddForce(- rb.velocity);
+				rb.AddRelativeForce(Vector3.forward*mag*lastDY);
+
+				//rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
+				
+				//Vector3 Cancellation = rb.velocity-forwardDirection;
+				Debug.Log(mag+"(, )"+lastDY+"(, )"+dy);
+			}*/
+
+	
+				Debug.Log("False");
+
+	
+	
+	
+			//notGrounded();
+		//LayerMask.LayerToName(
+
+	
+	    //public float reverseSpeed = 5;
+
+			//GameObject collider = other.gameObject;
+		//if(Layers.pl.Terr
+		//if(other.name=="Terrain")
+		//{
+		//	isGrounded();
+		//	Debug.Log("True");
+		//}
+		if(Input.GetKeyDown(KeyCode.Space))//test function that will be removed later
+		{
+			if(onGround)
+			{
+				onGround = false;
+			}
+			else
+			{
+				onGround = true;
+			}
+		}
+		Debug.Log("Readings on original");
+			Debug.Log("Movement is true");
+
+	
+	
+	
+	
+	
+	
+	
