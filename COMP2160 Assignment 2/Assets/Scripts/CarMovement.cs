@@ -30,7 +30,6 @@ public class CarMovement : MonoBehaviour
 	public GameObject wheelSin;
 	public GameObject wheelCos;
 	public GameObject wheelTan;
-	public GameObject body;
 	private Vector3 forwardDirection;
 	private Vector3 rightDirection;
 	private Vector3 upDirection;
@@ -51,7 +50,7 @@ public class CarMovement : MonoBehaviour
     {
 		forwardDirection = accelerationSpeed*(wheelAll.transform.position - wheelCos.transform.position);
 		rightDirection = accelerationSpeed*(wheelAll.transform.position - wheelSin.transform.position);
-		upDirection = accelerationSpeed*((wheelAll.transform.position+wheelSin.transform.position+wheelTan.transform.position+wheelCos.transform.position)/4-body.transform.position);
+		upDirection = accelerationSpeed*((wheelAll.transform.position+wheelSin.transform.position+wheelTan.transform.position+wheelCos.transform.position)/4-transform.position);
 		//upDirection = Quaternion.Euler(rightDirection*-90)*forwardDirection*accelerationSpeed;
 		if(onGround)
 		{
@@ -63,8 +62,7 @@ public class CarMovement : MonoBehaviour
 			}
 			if(dy!=0)
 			{
-				transform.Rotate(Vector3.up*rb.velocity.magnitude*turningSpeed*dx/turn);//(turningSpeed*upDirection*dx*Time.deltaTime)(dz * turnRadius * (rb.velocity.magnitude / velocityTurnPower)
-
+				transform.Rotate(Vector3.up*rb.velocity.magnitude*turningSpeed*dx);//(turningSpeed*upDirection*dx*Time.deltaTime)(dz * turnRadius * (rb.velocity.magnitude / velocityTurnPower)			
 			}
 			
 			Debug.Log("Speed: "+rb.velocity.magnitude);
@@ -127,13 +125,5 @@ public class CarMovement : MonoBehaviour
 		dxy[0] = dx;
 		dxy[1] = dy;
 		return dxy;
-	}
-	public float readOnlyY()
-	{
-		return dy;
-	}
-	public float readOnlyX()
-	{
-		return dx;
 	}
 }

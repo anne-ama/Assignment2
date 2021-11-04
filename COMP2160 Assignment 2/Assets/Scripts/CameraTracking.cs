@@ -14,8 +14,6 @@ public class CameraTracking : MonoBehaviour
  private Vector3 predir;
  public float threshold = 0.1f;
  public float decay = 0.1f;
- private float preY = 0;
- private float preX = 0;
  private bool lerp = false;
  private float[] preXY = new float[2];
 
@@ -38,10 +36,10 @@ public class CameraTracking : MonoBehaviour
 			}
 			preXY[i]=target.readOnlyXY()[i];
 		}
-		direction = (4+target.readOnlyY())*(-target.ReadOnlyDir().normalized);
-		if(target.readOnlyY()!=0)
+		direction = (4+target.readOnlyXY()[1])*(-target.ReadOnlyDir().normalized);
+		if(target.readOnlyXY()[1]!=0)
 		{
-			direction = Quaternion.Euler(Vector3.up*-30*target.readOnlyX())*direction;
+			direction = Quaternion.Euler(Vector3.up*-30*target.readOnlyXY()[0])*direction;
 		}
 		Debug.DrawRay(target.transform.position, direction, Color.cyan);
 		if(lerp)
@@ -59,29 +57,6 @@ public class CameraTracking : MonoBehaviour
 		destination = target.transform.position + predir;
 		transform.position = destination;
 		transform.forward = -predir;
-	//new Vector3(direction.x, 0, direction.z);
-	/*Vector3 carViewPort = Camera.main.WorldToViewportPoint (target.transform.position);
-	Vector3 worldMiddleP = Camera.main.ViewportToWorldPoint(carViewPort + cameraDistance * Vector3.right * Input.GetAxis("Horizontal"));
-	transform.position = Vector3.Lerp(transform.position, worldMiddleP, Time.deltaTime * decay);
-	//lerpReadOnlyY = Mathf.Lerp(target.readOnlyY(),lerpReadOnlyY,decay);
-	//direction = car.forward;*/
-
-	
-	//Debug.Log("Direction: " + direction + "; Destination: " + destination + "; DY: "+target.readOnlyY()+"; DX: "+ target.readOnlyX()+";");
-	//transform.position = destination;
-	//predir = Vector3.Lerp(transform.position, direction, decay);
-	//transform.rotation = new Quaternion(0,target.transform.rotation.y,0,target.transform.rotation.w);
-	
-	
-	
-	//Debug.Log("Camera Distance: " + destination.magnitude);
-	//Debug.Log(target.transform.rotation);
-	//transform.right = target.position - transform.position;
-	//transform.rotation = 
-	//transform.Translate(new Vector3(0,yLock-transform.position.y, 0));
-				//Debug.DrawRay(target.transform.position, predir, Color.red);
-			//transform.position = Vector3.Lerp(transform.position, destination, decay);
-
  } 
 
 void LateUpdate()
