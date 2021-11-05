@@ -44,7 +44,7 @@ public class CarHealth : MonoBehaviour
 		
 		if(collision.impulse.magnitude>damageThreshold)
 		{
-			rb.AddForce(Vector3.up*10, ForceMode.Impulse);
+			rb.AddForce(-collision.impulse, ForceMode.Impulse);
 			health = health + damageThreshold - collision.impulse.magnitude;
 			Debug.Log("Health: " + health + ";");
 			
