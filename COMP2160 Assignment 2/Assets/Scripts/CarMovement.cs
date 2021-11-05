@@ -62,6 +62,8 @@ public class CarMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		Debug.Log("Velocity: "+rb.velocity+"; Speed: "+rb.velocity.magnitude +"; Alternate Velocity: "+GetAlternate()+"; Velocity Angle: " + altAngle + ";");
+
 		if(gameOn)
 		{
 			dx = Input.GetAxis("Horizontal");
@@ -70,9 +72,17 @@ public class CarMovement : MonoBehaviour
 			xDir = (wheelAll.transform.position - wheelSin.transform.position).normalized;
 			yDir = ((wheelAll.transform.position+wheelSin.transform.position+wheelTan.transform.position+wheelCos.transform.position)/4-transform.position).normalized;
 			zDir = (wheelAll.transform.position - wheelCos.transform.position).normalized;
+			
 			if(onGround&&dy!=0)
 			{
-				transform.Rotate(turningSpeed*yDir*dx*Time.deltaTime);//(turningSpeed*upDirection*dx*Time.deltaTime)(dz * turnRadius * (rb.velocity.magnitude / velocityTurnPower)			
+				if(dy>0)
+				{
+					transform.Rotate(turningSpeed*yDir*dx*Time.deltaTime);//(turningSpeed*upDirection*dx*Time.deltaTime)(dz * turnRadius * (rb.velocity.magnitude / velocityTurnPower)			
+				}
+				if(dy<0)
+				{
+					transform.Rotate(turningSpeed*yDir*-dx*Time.deltaTime);//(turningSpeed*upDirection*dx*Time.deltaTime)(dz * turnRadius * (rb.velocity.magnitude / velocityTurnPower)			
+				}
 			}
 		}
     }
@@ -86,26 +96,45 @@ public class CarMovement : MonoBehaviour
 				if(rb.velocity.magnitude>accelerationSpeed&&((altAngle<-20&&altAngle>-160)||(altAngle>20&&altAngle<160)))
 				{
 					//Debug.Log(rb.velocity.magnitude);
-					rb.velocity = Quaternion.Euler(yDir*-altAngle)*rb.velocity;
 					//Debug.Log(rb.velocity.magnitude);
 				}
 				else
 				{*/
-					rb.AddForce(halfSpeed*GetAlternate()*dy);
+				//if(rb.velocity.magnitude>10)
+				//{
+					rb.velocity = Quaternion.Euler(yDir*-altAngle)*rb.velocity;
 				//}
-				Debug.Log("Velocity: "+rb.velocity+"; Speed: "+rb.velocity.magnitude +"; Alternate Velocity: "+GetAlternate()+"; Velocity Angle: " + altAngle + ";");
-				rb.AddRelativeForce(halfSpeed*Vector3.forward*dy);
+					//rb.AddForce(halfSpeed*GetAlternate()*dy);
+				//}
+				rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
 			
 			}
 		}
 	}
 	public Vector3 GetAlternate()
 	{
+		
 		altAngle = Vector3.SignedAngle(zDir,rb.velocity,yDir);
-		if(rb.velocity.magnitude<accelerationSpeed)
+		if(altAngle>90)
 		{
-			return zDir;
+			altAngle = altAngle-180;
 		}
+		else if(altAngle<-90)
+		{
+			altAngle = altAngle+180;
+		}
+		if(rb.velocity.magnitude<5)
+		{
+			if(dy>0)
+			{
+				return zDir;
+			}
+			if(dy<0)
+			{
+				return -zDir;
+			}
+		}
+		
 		return Quaternion.Euler(yDir*(-altAngle)*2)*rb.velocity;
 	}
 	void OnDrawGizmos()
