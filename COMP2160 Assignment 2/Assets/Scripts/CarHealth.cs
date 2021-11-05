@@ -41,10 +41,13 @@ public class CarHealth : MonoBehaviour
 	void OnCollisionEnter(Collision collision)
     {
         Debug.Log("Collision Magnitude: " + collision.impulse.magnitude + ";");
+		
 		if(collision.impulse.magnitude>damageThreshold)
 		{
+			rb.AddForce(Vector3.up*10, ForceMode.Impulse);
 			health = health + damageThreshold - collision.impulse.magnitude;
 			Debug.Log("Health: " + health + ";");
+			
 		}
     }
 	void kill()
@@ -53,7 +56,7 @@ public class CarHealth : MonoBehaviour
 		explosionSystem.Play();
 			//Vector3 direction = Vec - this.transform.position;
 			rb.velocity = rb.velocity + cm.ReadOnlyXYZDir()[1]*Time.fixedDeltaTime*10;
-			rb.AddRelativeForce(Vector3.up*10, ForceMode.Impulse);
+			rb.AddForce(Vector3.up*10, ForceMode.Impulse);
 			rb.AddRelativeTorque(Vector3.right*10*90, ForceMode.Impulse);
 			//mouseDown = false;
 		cm.deactivate();
