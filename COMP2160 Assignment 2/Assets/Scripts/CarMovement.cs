@@ -43,7 +43,7 @@ public class CarMovement : MonoBehaviour
 	//Alternate velocity. This will flip the Velocity's "rightDirection" value, giving an alternate
 	private float altAngle;
 	
-	public bool gameOver;
+	public bool gameOn = true;
 	
 	
 	//public GameObject Trigger;
@@ -62,79 +62,65 @@ public class CarMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		dx = Input.GetAxis("Horizontal");
-		dy = Input.GetAxis("Vertical");
-		dir = dy*zDir;
-		xDir = (wheelAll.transform.position - wheelSin.transform.position).normalized;
-		yDir = ((wheelAll.transform.position+wheelSin.transform.position+wheelTan.transform.position+wheelCos.transform.position)/4-transform.position).normalized;
-		zDir = (wheelAll.transform.position - wheelCos.transform.position).normalized;
-		if(onGround&&dy!=0)
+		if(gameOn)
 		{
-			transform.Rotate(turningSpeed*yDir*dx*Time.deltaTime);//(turningSpeed*upDirection*dx*Time.deltaTime)(dz * turnRadius * (rb.velocity.magnitude / velocityTurnPower)			
+			dx = Input.GetAxis("Horizontal");
+			dy = Input.GetAxis("Vertical");
+			dir = dy*zDir;
+			xDir = (wheelAll.transform.position - wheelSin.transform.position).normalized;
+			yDir = ((wheelAll.transform.position+wheelSin.transform.position+wheelTan.transform.position+wheelCos.transform.position)/4-transform.position).normalized;
+			zDir = (wheelAll.transform.position - wheelCos.transform.position).normalized;
+			if(onGround&&dy!=0)
+			{
+				transform.Rotate(turningSpeed*yDir*dx*Time.deltaTime);//(turningSpeed*upDirection*dx*Time.deltaTime)(dz * turnRadius * (rb.velocity.magnitude / velocityTurnPower)			
+			}
 		}
-		/*altAngle = Vector3.SignedAngle(zDir,rb.velocity,yDir);
-		if(altAngle>90)
-		{
-			altAngle = altAngle - 180;
-		}
-		if(altAngle<=-90)
-		{
-			altAngle = altAngle + 180;
-		}
-		altVel = Quaternion.Euler(yDir*(-altAngle)*2)*rb.velocity;
-		*/
-		Debug.Log("Speed: "+rb.velocity.magnitude +"; Alternate Velocity: "+GetAlternate()+"; Velocity Angle: " + altAngle + ";");
-		//Debug.Log(rb.velocity.magnitude*accelerationSpeed*GetAlternate()*dy);
-
     }
 	void FixedUpdate()
 	{
-		if(onGround&&(rb.velocity.magnitude==0||(rb.velocity.magnitude<maxSpeed&&dy>0)||(rb.velocity.magnitude<maxAntiSpeed&&dy<0)))
+		if(gameOn)
 		{
-			rb.AddRelativeForce(halfSpeed*Vector3.forward*dy);
-			rb.AddForce(halfSpeed*GetAlternate()*dy);
+			if(onGround&&(rb.velocity.magnitude==0||(rb.velocity.magnitude<maxSpeed&&dy>0)||(rb.velocity.magnitude<maxAntiSpeed&&dy<0)))
+			{
+				/*//angle check. This will point the velocity in the right direction,
+				if(rb.velocity.magnitude>accelerationSpeed&&((altAngle<-20&&altAngle>-160)||(altAngle>20&&altAngle<160)))
+				{
+					//Debug.Log(rb.velocity.magnitude);
+					rb.velocity = Quaternion.Euler(yDir*-altAngle)*rb.velocity;
+					//Debug.Log(rb.velocity.magnitude);
+				}
+				else
+				{*/
+					rb.AddForce(halfSpeed*GetAlternate()*dy);
+				//}
+				Debug.Log("Velocity: "+rb.velocity+"; Speed: "+rb.velocity.magnitude +"; Alternate Velocity: "+GetAlternate()+"; Velocity Angle: " + altAngle + ";");
+				rb.AddRelativeForce(halfSpeed*Vector3.forward*dy);
 			
-			//if((altAngle<10&&altAngle>-10)||rb.velocity.magnitude<20)
-			//{
-				//rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
-			//}
-			//else
-			//{
-			//Debug.Log(rb.velocity.magnitude*accelerationSpeed*GetAlternate()*dy);
-				//rb.AddForce(rb.velocity.magnitude*accelerationSpeed*GetAlternate()*dy);
-			//}
-				//rb.AddForce(altVel.normalized*accelerationSpeed*dy);//
-						
-			//rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
-			//rb.AddForce(accelerationSpeed*zDir*dy);
-			//rb.AddForce(altVel);//
-			//Vector3 relativeAltAngle = Quaternion.Euler(Vector3.up*(-altAngle))*Vector3.forward;
-			//rb.AddRelativeForce(halfSpeed*relativeAltAngle*dy);
-			//rb.AddForce(accelerationSpeed*altVel*dy);
+			}
 		}
 	}
 	public Vector3 GetAlternate()
 	{
-		if(rb.velocity.magnitude<20)
+		altAngle = Vector3.SignedAngle(zDir,rb.velocity,yDir);
+		if(rb.velocity.magnitude<accelerationSpeed)
 		{
 			return zDir;
 		}
-		altAngle = Vector3.SignedAngle(zDir,rb.velocity,yDir);
 		return Quaternion.Euler(yDir*(-altAngle)*2)*rb.velocity;
 	}
 	void OnDrawGizmos()
 	{
 		rb = gameObject.GetComponent<Rigidbody>();
 		Gizmos.color = Color.red;
-		Gizmos.DrawRay(this.transform.position, xDir*accelerationSpeed);
+		Gizmos.DrawRay(this.transform.position, xDir);//*accelerationSpeed
 		Gizmos.color = Color.green;
-		Gizmos.DrawRay(this.transform.position, yDir*accelerationSpeed);
+		Gizmos.DrawRay(this.transform.position, yDir);//*accelerationSpeed
 		Gizmos.color = Color.blue;
-		Gizmos.DrawRay(this.transform.position, zDir*accelerationSpeed);
+		Gizmos.DrawRay(this.transform.position, zDir);//*accelerationSpeed
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawRay(this.transform.position, rb.velocity);
 		Gizmos.color = Color.cyan;
-		Gizmos.DrawRay(this.transform.position, altVel);
+		Gizmos.DrawRay(this.transform.position, GetAlternate());
 		Gizmos.color = Color.white;
 		//Gizmos.DrawRay(this.transform.position, accelerationSpeed*zDir*dy);
 		Gizmos.color = Color.black;
@@ -170,9 +156,13 @@ public class CarMovement : MonoBehaviour
 		onGround = false;
 	}
 
-	public Vector3 ReadOnlyDir()
+	public Vector3[] ReadOnlyXYZDir()
 	{
-		return zDir;
+		Vector3[] XYZ = new Vector3[3];
+		XYZ[0] = xDir;
+		XYZ[1] = yDir;
+		XYZ[2] = zDir;
+		return XYZ;
 	}
 	public float[] readOnlyXY()
 	{
@@ -189,6 +179,8 @@ public class CarMovement : MonoBehaviour
 		}
 		return dxy;
 	}
-	
-	
+	public void deactivate()
+	{
+		gameOn = false;
+	}
 }

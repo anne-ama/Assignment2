@@ -214,5 +214,34 @@
 	}
 
 	
-	
+				//if((altAngle<10&&altAngle>-10)||rb.velocity.magnitude<20)
+			//{
+				//rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
+			//}
+			//else
+			//{
+			//Debug.Log(rb.velocity.magnitude*accelerationSpeed*GetAlternate()*dy);
+				//rb.AddForce(rb.velocity.magnitude*accelerationSpeed*GetAlternate()*dy);
+			//}
+				//rb.AddForce(altVel.normalized*accelerationSpeed*dy);//
+						
+			//rb.AddRelativeForce(accelerationSpeed*Vector3.forward*dy);
+			//rb.AddForce(accelerationSpeed*zDir*dy);
+			//rb.AddForce(altVel);//
+			//Vector3 relativeAltAngle = Quaternion.Euler(Vector3.up*(-altAngle))*Vector3.forward;
+			//rb.AddRelativeForce(halfSpeed*relativeAltAngle*dy);
+			//rb.AddForce(accelerationSpeed*altVel*dy);
+		/*altAngle = Vector3.SignedAngle(zDir,rb.velocity,yDir);
+		if(altAngle>90)
+		{
+			altAngle = altAngle - 180;
+		}
+		if(altAngle<=-90)
+		{
+			altAngle = altAngle + 180;
+		}
+		altVel = Quaternion.Euler(yDir*(-altAngle)*2)*rb.velocity;
+		*/
+		//Debug.Log(rb.velocity.magnitude*accelerationSpeed*GetAlternate()*dy);
+
 	

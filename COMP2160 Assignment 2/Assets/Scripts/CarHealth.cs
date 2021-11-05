@@ -12,26 +12,29 @@ public class CarHealth : MonoBehaviour
 	private ParticleSystem smokeSystem;
 	public GameObject Explosion;
 	private ParticleSystem explosionSystem;
-	private bool gameOver;
+	private bool gameOver = false;
 	private Rigidbody rb;
+	private CarMovement cm;
+	
 	// Start is called before the first frame update
     void Start()
     {
 		rb = gameObject.GetComponent<Rigidbody>();
 		smokeSystem = Smoke.gameObject.GetComponent<ParticleSystem>();
 		explosionSystem = Explosion.gameObject.GetComponent<ParticleSystem>();
+		cm = gameObject.GetComponent<CarMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!gameOver&&health<=0)
+        if((!gameOver)&&(health<=0))
 		{
 			kill();
 		}
 		else if(health<=smokeThreshold)
 		{
-			//Smoke.transform.position = transform.position;
+			Smoke.transform.position = transform.position;
 			smokeSystem.Play();
 		}
     }
@@ -46,7 +49,14 @@ public class CarHealth : MonoBehaviour
     }
 	void kill()
 	{
+		explosionSystem.transform.position = transform.position;
 		explosionSystem.Play();
+			//Vector3 direction = Vec - this.transform.position;
+			rb.velocity = rb.velocity + cm.ReadOnlyXYZDir()[1]*Time.fixedDeltaTime*10;
+			rb.AddRelativeForce(Vector3.up*10, ForceMode.Impulse);
+			rb.AddRelativeTorque(Vector3.right*10*90, ForceMode.Impulse);
+			//mouseDown = false;
+		cm.deactivate();
 		gameOver = true;
 	}
 

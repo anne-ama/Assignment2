@@ -36,7 +36,7 @@ public class CameraTracking : MonoBehaviour
 			}
 			preXY[i]=target.readOnlyXY()[i];
 		}
-		direction = (4+target.readOnlyXY()[1])*(-target.ReadOnlyDir().normalized);
+		direction = (4+target.readOnlyXY()[1])*(-target.ReadOnlyXYZDir()[2].normalized);
 		if(target.readOnlyXY()[1]!=0)
 		{
 			direction = Quaternion.Euler(Vector3.up*-30*target.readOnlyXY()[0])*direction;
